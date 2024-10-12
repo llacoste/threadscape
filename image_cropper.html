@@ -1,0 +1,89 @@
+<style>
+	.container {
+			max-width: 500px;
+			margin: auto;
+			text-align: center;
+	}
+	.controls {
+			margin-top: 20px;
+	}
+	.controls button {
+			margin-right: 10px;
+			padding: 10px 20px;
+			font-size: 16px;
+	}
+	#cropped-result {
+			margin-top: 20px;
+	}
+	#cropped-image {
+			max-width: 100%;
+	}
+</style>
+
+<center>
+	<div class="container">
+		<img id="image" src="images/mandala_close.jpg" alt="Image to crop" style="max-width: 100%;" />
+
+		<!-- Control buttons -->
+		<div class="controls">
+			<button id="rotate-left">Rotate Left</button>
+			<button id="rotate-right">Rotate Right</button>
+			<button id="zoom-in">Zoom In</button>
+			<button id="zoom-out">Zoom Out</button>
+			<button id="crop">Crop</button>
+		</div>
+
+		<!-- Cropped result -->
+		<div id="cropped-result">
+			<h3>Cropped Image:</h3>
+			<img id="cropped-image" src alt="Cropped Image" />
+		</div>
+	</div>
+</centercenter>
+
+<script>
+		// Initialize Cropper.js
+		const image = document.getElementById('image');
+		const cropper = new Cropper(image, {
+				aspectRatio: 1 / 1,
+				viewMode: 1,
+				zoomable: true,
+				scalable: true,
+				rotatable: true,
+				movable: true,
+		});
+
+		console.log('Cropper initialized:', cropper);
+
+		// Rotate Left
+		document.getElementById('rotate-left').addEventListener('click', () => {
+				console.log('Rotate Left button clicked');
+				cropper.rotate(-45); // Rotate image 45 degrees counterclockwise
+		});
+
+		// Rotate Right
+		document.getElementById('rotate-right').addEventListener('click', () => {
+				console.log('Rotate Right button clicked');
+				cropper.rotate(45); // Rotate image 45 degrees clockwise
+		});
+
+		// Zoom In
+		document.getElementById('zoom-in').addEventListener('click', () => {
+				console.log('Zoom In button clicked');
+				cropper.zoom(0.1); // Zoom in by 10%
+		});
+
+		// Zoom Out
+		document.getElementById('zoom-out').addEventListener('click', () => {
+				console.log('Zoom Out button clicked');
+				cropper.zoom(-0.1); // Zoom out by 10%
+		});
+
+		// Crop
+		document.getElementById('crop').addEventListener('click', () => {
+				console.log('Crop button clicked');
+				const canvas = cropper.getCroppedCanvas();
+				const croppedImage = document.getElementById('cropped-image');
+				croppedImage.src = canvas.toDataURL('image/png');
+		});
+</script>
