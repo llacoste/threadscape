@@ -18,9 +18,9 @@
             Shape
           </div>
           <div class="col-8">
-            <ul class="actions small">
-              <li><a href="#" class="button primary small">Circle</a></li>
-              <li><a href="#" class="button small">Square</a></li>
+            <ul id="base_shape_selection" class="actions small">
+              <li><a href="javascript:void(0)" class="button primary small">Circle</a></li>
+              <li><a href="javascript:void(0)" class="button small">Square</a></li>
             </ul>
           </div>
         </div>
@@ -29,9 +29,9 @@
             Units
           </div>
           <div class="col-8">
-            <ul class="actions small">
-              <li><a href="#" class="button primary small">Inches</a></li>
-              <li><a href="#" class="button small">Centimeters</a></li>
+            <ul id="base_unit_selection" class="actions small">
+              <li><a href="javascript:void(0)" class="button primary small">Inches</a></li>
+              <li><a href="javascript:void(0)" class="button small">Centimeters</a></li>
             </ul>
           </div>
         </div>
@@ -62,8 +62,8 @@
       <section>
         <h3>Output</h3>
         <ul class="actions fit">
-          <li><a href="#" class="button primary fit">Download Processed Image</a></li>
-          <li><a href="#" class="button fit">Download Instructions</a></li>
+          <li><a href="javascript:void(0)" class="button primary fit">Download Processed Image</a></li>
+          <li><a href="javascript:void(0)" class="button fit">Download Instructions</a></li>
         </ul>
       </section>
     </div>
@@ -74,12 +74,8 @@
   syncSliderAndInput('diameter_slider', 'diameter_slider_value', 6, 250);
   syncSliderAndInput('pegs_slider', 'pegs_slider_value', 150, 1200);
 
-  base_canvas = document.getElementById('base_canvas');
-  base_ctx = base_canvas.getContext('2d');
+  setupButtonGroupListeners('base_shape_selection');
+  setupButtonGroupListeners('base_unit_selection');
 
-  base_img = new Image();
-  base_img.src = 'images/mandala_strings.jpg';
-  base_img.onload = function() {
-      base_ctx.drawImage(base_img, 0, 0, base_canvas.width, base_canvas.height);
-  };
+  base_canvas = document.getElementById('base_canvas');
 </script>

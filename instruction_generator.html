@@ -13,7 +13,7 @@
     <div class="col-6">
       <section class="file-section" style="margin-bottom: 25px;">
         <button id="input-file-button" class="button large">Click to select an Image</button>
-        <input type="file" id="input-image" accept="image/*" />
+        <input class="display_none" type="file" id="input-image" accept="image/*" />
       </section>
       <section>
         <h3>Parameters</h3>
@@ -22,9 +22,9 @@
             Shape
           </div>
           <div class="col-8">
-            <ul class="actions small">
-              <li><a href="#" class="button primary small">Circle</a></li>
-              <li><a href="#" class="button small">Square</a></li>
+            <ul id="instruction_shape_selection" class="actions small">
+              <li><a href="javascript:void(0)" class="button primary small">Circle</a></li>
+              <li><a href="javascript:void(0)" class="button small">Square</a></li>
             </ul>
           </div>
         </div>
@@ -33,10 +33,10 @@
             Quality
           </div>
           <div class="col-8">
-            <ul class="actions small">
-              <li><a href="#" class="button primary small">Low</a></li>
-              <li><a href="#" class="button small">Medium</a></li>
-              <li><a href="#" class="button small">High</a></li>
+            <ul id="instruction_quality_selection" class="actions small">
+              <li><a href="javascript:void(0)" class="button primary small">Low</a></li>
+              <li><a href="javascript:void(0)" class="button small">Medium</a></li>
+              <li><a href="javascript:void(0)" class="button small">High</a></li>
             </ul>
           </div>
         </div>
@@ -45,9 +45,9 @@
             Mode
           </div>
           <div class="col-8">
-            <ul class="actions small">
-              <li><a href="#" class="button primary small">Monochrome</a></li>
-              <li><a href="#" class="button small">Color</a></li>
+            <ul id="instruction_mode_selection" class="actions small">
+              <li><a href="javascript:void(0)" class="button primary small">Monochrome</a></li>
+              <li><a href="javascript:void(0)" class="button small">Color</a></li>
             </ul>
           </div>
         </div>
@@ -100,8 +100,8 @@
       <section>
         <h3>Output</h3>
         <ul class="actions fit">
-          <li><a href="#" class="button fit">Download Processed Image</a></li>
-          <li><a href="#" class="button fit">Download Instructions</a></li>
+          <li><a href="javascript:void(0)" class="button fit">Download Processed Image</a></li>
+          <li><a href="javascript:void(0)" class="button fit">Download Instructions</a></li>
         </ul>
       </section>
     </div>
@@ -113,6 +113,10 @@
   syncSliderAndInput('segments_slider', 'segments_slider_value', 0, 10000);
   syncSliderAndInput('opacity_slider', 'opacity_slider_value', 1, 5);
   syncSliderAndInput('thickness_slider', 'thickness_slider_value', 25, 100);
+
+  setupButtonGroupListeners('instruction_shape_selection');
+  setupButtonGroupListeners('instruction_quality_selection');
+  setupButtonGroupListeners('instruction_mode_selection');
 
   instruction_canvas = document.getElementById('instruction_canvas');
   instruction_ctx = instruction_canvas.getContext('2d');
