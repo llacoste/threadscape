@@ -1,0 +1,129 @@
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <section>
+        <h3>Preview</h3>
+      </section>
+      <section>
+        <div class="canvas-container">
+          <canvas id="instruction_canvas"></canvas>
+      </div>
+      </section>
+    </div>
+    <div class="col-6">
+      <section class="file-section" style="margin-bottom: 25px;">
+        <button id="input-file-button" class="button large">Click to select an Image</button>
+        <input type="file" id="input-image" accept="image/*" />
+      </section>
+      <section>
+        <h3>Parameters</h3>
+        <div class="row">
+          <div class="col-4">
+            Shape
+          </div>
+          <div class="col-8">
+            <ul class="actions small">
+              <li><a href="#" class="button primary small">Circle</a></li>
+              <li><a href="#" class="button small">Square</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            Quality
+          </div>
+          <div class="col-8">
+            <ul class="actions small">
+              <li><a href="#" class="button primary small">Low</a></li>
+              <li><a href="#" class="button small">Medium</a></li>
+              <li><a href="#" class="button small">High</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            Mode
+          </div>
+          <div class="col-8">
+            <ul class="actions small">
+              <li><a href="#" class="button primary small">Monochrome</a></li>
+              <li><a href="#" class="button small">Color</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-2">
+            Pegs
+          </div>
+          <div class="col-7">
+            <input type="range" id="pegs_slider" min="150" max="1200" value="360">
+          </div>
+          <div class="col-3">
+            <input type="text" id="pegs_slider_value" value="360">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-2">
+            Segments
+          </div>
+          <div class="col-7">
+            <input type="range" id="segments_slider" min="0" max="10000" value="5000">
+          </div>
+          <div class="col-3">
+            <input type="text" id="segments_slider_value" value="5000">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-2">
+            Opacity
+          </div>
+          <div class="col-7">
+            <input type="range" id="opacity_slider" min="1" max="5" value="2">
+          </div>
+          <div class="col-3">
+            <input type="text" id="opacity_slider_value" value="2">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-2">
+            Thickness
+          </div>
+          <div class="col-7">
+            <input type="range" id="thickness_slider" min="25" max="100" value="50">
+          </div>
+          <div class="col-3">
+            <input type="text" id="thickness_slider_value" value="50">
+          </div>
+        </div>
+      </section>
+      <hr>
+      <section>
+        <h3>Output</h3>
+        <ul class="actions fit">
+          <li><a href="#" class="button fit">Download Processed Image</a></li>
+          <li><a href="#" class="button fit">Download Instructions</a></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script>
+  syncSliderAndInput('pegs_slider', 'pegs_slider_value', 150, 1200);
+  syncSliderAndInput('segments_slider', 'segments_slider_value', 0, 10000);
+  syncSliderAndInput('opacity_slider', 'opacity_slider_value', 1, 5);
+  syncSliderAndInput('thickness_slider', 'thickness_slider_value', 25, 100);
+
+  instruction_canvas = document.getElementById('instruction_canvas');
+  instruction_ctx = instruction_canvas.getContext('2d');
+
+  instruction_img = new Image();
+  instruction_img.src = 'images/mandala_strings.jpg';
+  instruction_img.onload = function() {
+    instruction_ctx.drawImage(instruction_img, 0, 0, instruction_canvas.width, instruction_canvas.height);
+  };
+
+  document.getElementById('input-file-button').addEventListener('click', function() {
+		document.getElementById('input-image').click();
+	});
+</script>

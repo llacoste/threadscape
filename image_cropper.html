@@ -1,89 +1,97 @@
-<style>
-	.container {
-			max-width: 500px;
-			margin: auto;
-			text-align: center;
-	}
-	.controls {
-			margin-top: 20px;
-	}
-	.controls button {
-			margin-right: 10px;
-			padding: 10px 20px;
-			font-size: 16px;
-	}
-	#cropped-result {
-			margin-top: 20px;
-	}
-	#cropped-image {
-			max-width: 100%;
-	}
-</style>
+<div class="container">
+	<center>
+		<!-- Custom button that triggers file input -->
+		<button id="custom-file-button" class="button large">Click to select an Image</button>
+		<input type="file" id="upload-image" accept="image/*" />
+		</br></br>
 
-<center>
-	<div class="container">
-		<img id="image" src="images/mandala_close.jpg" alt="Image to crop" style="max-width: 100%;" />
+		<div class="image_container">
+			<img id="image_to_crop" src="images/mandala_close.jpg" alt="Image to crop"/>
+		</div>
 
 		<!-- Control buttons -->
 		<div class="controls">
-			<button id="rotate-left">Rotate Left</button>
-			<button id="rotate-right">Rotate Right</button>
-			<button id="zoom-in">Zoom In</button>
-			<button id="zoom-out">Zoom Out</button>
-			<button id="crop">Crop</button>
+			<button  id="rotate-left" class="button large">Rotate Left</button>
+			<button id="rotate-right" class="button large">Rotate Right</button>
+			<button id="zoom-in" class="button large">Zoom In</button>
+			<button id="zoom-out" class="button large">Zoom Out</button>
+			<button id="crop" class="button large">Crop</button>
 		</div>
 
+		<hr>
 		<!-- Cropped result -->
 		<div id="cropped-result">
 			<h3>Cropped Image:</h3>
-			<img id="cropped-image" src alt="Cropped Image" />
+			<img id="cropped-image" src="" alt="After you select Crop above, your cropped image will appear here." />
 		</div>
-	</div>
-</centercenter>
+	</center>
+</div>
 
 <script>
-		// Initialize Cropper.js
-		const image = document.getElementById('image');
-		const cropper = new Cropper(image, {
-				aspectRatio: 1 / 1,
-				viewMode: 1,
-				zoomable: true,
-				scalable: true,
-				rotatable: true,
-				movable: true,
-		});
+	// Initialize Cropper.js
+	cropper = null;
+	image_to_crop = document.getElementById('image_to_crop');
 
-		console.log('Cropper initialized:', cropper);
-
-		// Rotate Left
-		document.getElementById('rotate-left').addEventListener('click', () => {
-				console.log('Rotate Left button clicked');
-				cropper.rotate(-45); // Rotate image 45 degrees counterclockwise
+	// Function to initialize or reinitialize Cropper.js
+	function initializeCropper() {
+		if (cropper) {
+			cropper.destroy(); // Destroy the previous cropper instance if it exists
+		}
+		cropper = new Cropper(image_to_crop, {
+			aspectRatio: 1 / 1,
+			viewMode: 1,
+			zoomable: true,
+			scalable: true,
+			rotatable: true,
+			movable: true,
 		});
+	}
 
-		// Rotate Right
-		document.getElementById('rotate-right').addEventListener('click', () => {
-				console.log('Rotate Right button clicked');
-				cropper.rotate(45); // Rotate image 45 degrees clockwise
-		});
+	// Initial cropper setup
+	initializeCropper();
 
-		// Zoom In
-		document.getElementById('zoom-in').addEventListener('click', () => {
-				console.log('Zoom In button clicked');
-				cropper.zoom(0.1); // Zoom in by 10%
-		});
+	// Handle file upload and change the image source
+	document.getElementById('upload-image').addEventListener('change', function(event) {
+		const file = event.target.files[0];
+		if (file) {
+			const reader = new FileReader();
+			reader.onload = function(e) {
+				image.src = e.target.result; // Set the new image source
+				initializeCropper(); // Reinitialize Cropper.js with the new image
+			};
+			reader.readAsDataURL(file); // Read the file as a data URL
+		}
+	});
 
-		// Zoom Out
-		document.getElementById('zoom-out').addEventListener('click', () => {
-				console.log('Zoom Out button clicked');
-				cropper.zoom(-0.1); // Zoom out by 10%
-		});
+	// Custom button click to trigger the hidden file input
+	document.getElementById('custom-file-button').addEventListener('click', function() {
+		document.getElementById('upload-image').click();
+	});
 
-		// Crop
-		document.getElementById('crop').addEventListener('click', () => {
-				console.log('Crop button clicked');
-				const canvas = cropper.getCroppedCanvas();
-				const croppedImage = document.getElementById('cropped-image');
-				croppedImage.src = canvas.toDataURL('image/png');
-		});
+	// Rotate Left
+	document.getElementById('rotate-left').addEventListener('click', () => {
+		cropper.rotate(-45); // Rotate image 45 degrees counterclockwise
+	});
+
+	// Rotate Right
+	document.getElementById('rotate-right').addEventListener('click', () => {
+		cropper.rotate(45); // Rotate image 45 degrees clockwise
+	});
+
+	// Zoom In
+	document.getElementById('zoom-in').addEventListener('click', () => {
+		cropper.zoom(0.1); // Zoom in by 10%
+	});
+
+	// Zoom Out
+	document.getElementById('zoom-out').addEventListener('click', () => {
+		cropper.zoom(-0.1); // Zoom out by 10%
+	});
+
+	// Crop
+	document.getElementById('crop').addEventListener('click', () => {
+		const canvas = cropper.getCroppedCanvas();
+		const croppedImage = document.getElementById('cropped-image');
+		croppedImage.src = canvas.toDataURL('image/png'); // Display the cropped image
+	});
 </script>

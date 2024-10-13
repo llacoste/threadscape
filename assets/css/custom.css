@@ -1,0 +1,94 @@
+input[type="range"] {
+  -webkit-appearance: none; /* Remove default styling */
+  width: 100%; /* Full width slider */
+  height: 8px; /* Track height */
+  background: #ddd; /* Track background color */
+  border-radius: 5px; /* Rounded track */
+  outline: none;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+input[type="range"]:hover {
+  opacity: 1; /* Increase opacity on hover */
+}
+
+/* Customize the thumb (handle) */
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #000000; /* Thumb color */
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #000000;
+  cursor: pointer;
+}
+
+.image_container {
+  max-width: 75%;
+  max-height: 1000px;
+  margin: auto;
+  text-align: center;
+}
+
+img#image {
+  max-width: 100%;
+}
+
+.controls {
+  margin-top: 20px;
+}
+
+.controls button {
+  margin-right: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+
+#cropped-result {
+  margin-top: 20px;
+}
+
+#cropped-image {
+  max-width: 100%;
+}
+
+/* Hide the actual file input */
+#upload-image {
+  display: none;
+}
+
+/* Hide the actual file input */
+#input-image {
+  display: none;
+}
+
+.file-section {
+  display: flex;          /* Enables Flexbox */
+  justify-content: center; /* Centers the button horizontally */
+  align-items: center;     /* Centers the button vertically */
+}
+
+.canvas-container {
+  width: 100%; /* Set the width of the container */
+  aspect-ratio: 1 / 1; /* Ensure the height is equal to the width (1:1 aspect ratio) */
+  border: 1px solid black; /* Add a black border */
+  border-radius: 5px; /* Slightly round the corners */
+  padding: 5px; /* Add 3px internal padding */
+  box-sizing: border-box; /* Ensure padding is included in the total size */
+}
+
+
+canvas {
+  width: 100%; /* Make the canvas fill the container's width */
+  height: 100%; /* Automatically match the container's height */
+  display: block; /* Remove extra space below canvas due to inline display behavior */
+}

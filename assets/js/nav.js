@@ -14,6 +14,8 @@ navLinks.forEach(link => {
         // Get the text of the clicked link (e.g., "Image Cropper") and format it
         const pageName = this.textContent.trim().toLowerCase().replace(/\s+/g, '_') + '.html';
 
+        console.log(`Loading content from: ${pageName}`);
+
         // Fetch the corresponding HTML file and replace the contents of <div id="main">
         fetch(`${pageName}`)
             .then(response => {
@@ -47,3 +49,13 @@ navLinks.forEach(link => {
     });
 });
 
+document.getElementById('main').addEventListener('click', function(event) {
+    if (event.target && event.target.id === 'get_started') {
+        event.preventDefault();
+        console.log("Let's get started button clicked!");
+
+        // Simulate a click on the "Image Cropper" navigation link
+        const imageCropperLink = document.getElementById('image_cropper');
+        imageCropperLink.click(); // Trigger a click event
+    }
+});
