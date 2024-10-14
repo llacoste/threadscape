@@ -19,8 +19,8 @@
           </div>
           <div class="col-8">
             <ul id="base_shape_selection" class="actions small">
-              <li><a href="javascript:void(0)" class="button primary small">Circle</a></li>
-              <li><a href="javascript:void(0)" class="button small">Square</a></li>
+              <li><a id="base_circle_button" href="javascript:void(0)" class="button primary small">Circle</a></li>
+              <li><a id="base_square_button" href="javascript:void(0)" class="button small">Square</a></li>
             </ul>
           </div>
         </div>
@@ -40,7 +40,7 @@
             Diameter
           </div>
           <div class="col-7">
-            <input type="range" id="diameter_slider" min="6" max="250" value="24">
+            <input type="range" id="diameter_slider" min="6" max="122" value="24">
           </div>
           <div class="col-3">
             <input type="text" id="diameter_slider_value" value="24">
@@ -51,7 +51,7 @@
             Pegs
           </div>
           <div class="col-7">
-            <input type="range" id="pegs_slider" min="150" max="1200" value="360">
+            <input type="range" id="pegs_slider" min="150" max="720" value="360">
           </div>
           <div class="col-3">
             <input type="text" id="pegs_slider_value" value="360">
@@ -71,11 +71,12 @@
 </div>
 
 <script>
-  syncSliderAndInput('diameter_slider', 'diameter_slider_value', 6, 250);
-  syncSliderAndInput('pegs_slider', 'pegs_slider_value', 150, 1200);
+  syncSliderAndInput('diameter_slider', 'diameter_slider_value', 6, 122);
+  syncSliderAndInput('pegs_slider', 'pegs_slider_value', 150, 720);
 
   setupButtonGroupListeners('base_shape_selection');
   setupButtonGroupListeners('base_unit_selection');
+  setupUnitChangeListener();
 
-  base_canvas = document.getElementById('base_canvas');
+  initCanvas();
 </script>
