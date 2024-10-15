@@ -102,14 +102,13 @@ function drawDots() {
 }
 
 function convertToUnits(value, fromUnit, toUnit) {
-  // Handle conversion between Inches and Centimeters
   if (fromUnit === 'Inches' && toUnit === 'Centimeters') {
     return parseInt(Math.round(value * 2.54), 10); // Convert Inches to Centimeters and round to nearest whole number
   }
   if (fromUnit === 'Centimeters' && toUnit === 'Inches') {
     return parseInt(Math.round(value / 2.54), 10); // Convert Centimeters to Inches and round to nearest whole number
   }
-  return parseInt(Math.round(value), 10); // Round to nearest whole number if no conversion is needed and cast to integer
+  return parseInt(Math.round(value), 10); 
 }
 
 
@@ -140,6 +139,87 @@ function setupUnitChangeListener() {
       this.classList.add('primary');
     });
   });
+}
+
+function generatePDF() {
+  const canvas = document.getElementById('base_canvas');
+
+  // Check if the canvas exists and has content
+  if (!canvas) {
+      console.error('Canvas not found');
+      return;
+  }
+
+  // Retrieve the diameter value from the slider
+  const diameterValue = parseFloat(document.getElementById('diameter_slider_value').value);
+
+  // Retrieve the selected unit (Inches or Centimeters)
+  const selectedUnitElement = document.querySelector('#base_unit_selection .primary');
+  const selectedUnit = selectedUnitElement.textContent.trim(); // Get the selected unit text
+
+  // Convert diameter to inches if the unit is in centimeters
+  let diameterInInches = diameterValue;
+  if (selectedUnit === 'Centimeters') {
+      diameterInInches = diameterValue / 2.54; // Convert cm to inches
+  }
+
+  // Define the canvas dimensions based on the selected diameter in inches
+  const dpi = 96; // assuming 96 DPI for the canvas
+  const canvasWidthInPixels = diameterInInches * dpi;
+  const canvasHeightInPixels = diameterInInches * dpi;
+
+  // Scale canvas content to fit standard letter pages (8.5x11 inches)
+  const pageWidthInInches = 8.5;
+  const pageHeightInInches = 11;
+  const pageWidthInPixels = pageWidthInInches * dpi;
+  const pageHeightInPixels = pageHeightInInches * dpi;
+
+  // Calculate how many pages are needed
+  const pagesAcross = Math.ceil(canvasWidthInPixels / pageWidthInPixels);
+  const pagesDown = Math.ceil(canvasHeightInPixels / pageHeightInPixels);
+
+  // Create a new jsPDF instance for a portrait-oriented letter page
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF({
+      orientation: 'portrait',
+      unit: 'in', // Use inches for easier scaling
+      format: 'letter' // 8.5 x 11 inches (letter size)
+  });
+
+  // Loop through each page section and add to the PDF
+  for (let row = 0; row < pagesDown; row++) {
+      for (let col = 0; col < pagesAcross; col++) {
+          const xOffset = col * pageWidthInPixels;
+          const yOffset = row * pageHeightInPixels;
+
+          // Create a temporary canvas to capture part of the base_canvas
+          const tempCanvas = document.createElement('canvas');
+          tempCanvas.width = pageWidthInPixels;
+          tempCanvas.height = pageHeightInPixels;
+          const tempContext = tempCanvas.getContext('2d');
+          
+          // Copy the section of the main canvas into the temp canvas
+          tempContext.drawImage(
+              canvas,
+              xOffset, yOffset, // Source x and y (starting point)
+              pageWidthInPixels, pageHeightInPixels, // Source width and height (size of the page)
+              0, 0, // Destination x and y (in the temp canvas)
+              pageWidthInPixels, pageHeightInPixels // Destination width and height (size of the page)
+          );
+
+          // Convert the temp canvas to a data URL (image)
+          const canvasImage = tempCanvas.toDataURL('image/png');
+
+          // Add the image to the PDF
+          if (row !== 0 || col !== 0) {
+              pdf.addPage(); // Add a new page for every tile except the first
+          }
+          pdf.addImage(canvasImage, 'PNG', 0, 0, pageWidthInInches, pageHeightInInches);
+      }
+  }
+
+  // Save the generated PDF
+  pdf.save('string_art_base.pdf');
 }
 
 // Attach event listeners to update canvas when parameters change
