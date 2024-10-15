@@ -2,21 +2,10 @@ const navLinks = document.querySelectorAll('#navbar li a');
 const mainDiv = document.getElementById('main'); // Get the main div
 
 navLinks.forEach(link => {
-    link.addEventListener('click', function(event) {
-        event.preventDefault(); // Prevent default link behavior
-
-        // Remove the 'active' class from all <li> elements
+    link.addEventListener('click', function (event) {
         navLinks.forEach(navLink => navLink.parentElement.classList.remove('active'));
-        
-        // Add the 'active' class to the clicked <li> element
         this.parentElement.classList.add('active');
-        
-        // Get the text of the clicked link (e.g., "Image Cropper") and format it
         const pageName = this.textContent.trim().toLowerCase().replace(/\s+/g, '_') + '.html';
-
-        console.log(`Loading content from: ${pageName}`);
-
-        // Fetch the corresponding HTML file and replace the contents of <div id="main">
         fetch(`${pageName}`)
             .then(response => {
                 if (!response.ok) {
@@ -25,21 +14,17 @@ navLinks.forEach(link => {
                 return response.text();
             })
             .then(data => {
-                mainDiv.innerHTML = data; // Replace the content of <div id="main">
-
-                // After injecting the HTML, find and execute script tags
+                mainDiv.innerHTML = data;
                 const scripts = mainDiv.querySelectorAll('script');
                 scripts.forEach(script => {
                     const newScript = document.createElement('script');
                     if (script.src) {
-                        // If it's an external script, load the src
                         newScript.src = script.src;
                     } else {
-                        // If it's an inline script, set the content
                         newScript.textContent = script.textContent;
                     }
-                    document.body.appendChild(newScript); // Append and execute the script
-                    document.body.removeChild(newScript); // Optionally remove the script after execution
+                    document.body.appendChild(newScript);
+                    document.body.removeChild(newScript);
                 });
             })
             .catch(error => {
@@ -49,7 +34,7 @@ navLinks.forEach(link => {
     });
 });
 
-document.getElementById('main').addEventListener('click', function(event) {
+document.getElementById('main').addEventListener('click', function (event) {
     if (event.target && event.target.id === 'get_started') {
         event.preventDefault();
         console.log("Let's get started button clicked!");
