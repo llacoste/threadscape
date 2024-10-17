@@ -1,0 +1,81 @@
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <section>
+        <h3>Base Preview</h3>
+      </section>
+      <section>
+        <div class="canvas-container">
+          <canvas id="base_canvas"></canvas>
+      </div>
+      </section>
+    </div>
+    <div class="col-6">
+      <section>
+        <h3>Parameters</h3>
+        <div class="row">
+          <div class="col-4">
+            Shape
+          </div>
+          <div class="col-8">
+            <ul id="base_shape_selection" class="actions small">
+              <li><a id="base_circle_button" href="javascript:void(0)" class="button primary small">Circle</a></li>
+              <li><a id="base_square_button" href="javascript:void(0)" class="button small">Square</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            Units
+          </div>
+          <div class="col-8">
+            <ul id="base_unit_selection" class="actions small">
+              <li><a href="javascript:void(0)" class="button primary small">Inches</a></li>
+              <li><a href="javascript:void(0)" class="button small">Centimeters</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-2">
+            Diameter
+          </div>
+          <div class="col-7">
+            <input type="range" id="diameter_slider" min="12" max="122" value="24">
+          </div>
+          <div class="col-3">
+            <input type="text" id="diameter_slider_value" value="24">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-2">
+            Pegs
+          </div>
+          <div class="col-7">
+            <input type="range" id="pegs_slider" min="150" max="720" value="360">
+          </div>
+          <div class="col-3">
+            <input type="text" id="pegs_slider_value" value="360">
+          </div>
+        </div>
+      </section>
+      <hr>
+      <section>
+        <h3>Output</h3>
+        <ul class="actions fit">
+          <li><button onclick="generatePDF()" class="button primary fit">Download Base PDF</button></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</div>
+
+<script>
+  syncSliderAndInput('diameter_slider', 'diameter_slider_value', 12, 122);
+  syncSliderAndInput('pegs_slider', 'pegs_slider_value', 150, 720);
+
+  setupButtonGroupListeners('base_shape_selection');
+  setupButtonGroupListeners('base_unit_selection');
+  setupUnitChangeListener();
+
+  initCanvas();
+</script>

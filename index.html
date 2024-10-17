@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html>
+	<head id="head">
+		<title>ThreadScape</title>
+		<meta charset="utf-8" />
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/nav.css" />
+		<link rel="stylesheet" href="assets/css/custom.css" />
+		<link rel="stylesheet" href="assets/css/cropper.css">
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+
+		<style>
+      #loading {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background-color: #fff; /* Or any other background color */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      }
+
+      .spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
+	</head>
+
+	<body class="is-preload">
+
+		<div id="loading">
+      <div class="spinner"></div>
+    </div>
+
+		<!-- Wrapper -->
+		<div id="wrapper" class="fade-in">
+
+			<!-- Intro -->
+			<div id="intro">
+				<h1>ThreadScape</h1>
+				<p>A free tool for creating incredible string art.</p>
+				<ul class="actions">
+					<li><a href="#header"
+							class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+				</ul>
+			</div>
+
+			<!-- Header -->
+			<header id="header">
+				<a href="index.html" class="logo">ThreadScape</a>
+			</header>
+
+			<!-- Nav -->
+			<nav id="nav">
+				<ul id="navbar" class="links">
+					<li class="active"><a id="about" href="javascript:void(0)">About</a></li>
+					<li><a id="image_cropper" href="javascript:void(0)">Image Cropper</a></li>
+					<li><a id="instruction_generator" href="javascript:void(0)">Instruction Generator</a></li>
+					<li><a id="base_generator" href="javascript:void(0)">Base Generator</a></li>
+				</ul>
+				<ul class="icons">
+					<li><a href="https://github.com/llacoste/threadscape"
+							class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+				</ul>
+			</nav>
+
+			<!-- Main -->
+			<div id="main"></div>
+
+			<!-- Footer -->
+			<footer id="footer">
+				<!-- <section></section> -->
+			</footer>
+
+			<!-- Copyright -->
+			<div id="copyright">
+				<ul><li>Created by Lance Lacoste </li><li>Design: <a
+							href="https://html5up.net">HTML5 UP</a></li></ul>
+			</div>
+		</div>
+
+		<script>
+      window.onload = function () {
+        document.getElementById('loading').style.display = 'none';
+
+        fetch('about.html')
+          .then(response => response.text())
+          .then(data => {
+            document.getElementById('main').innerHTML = data;
+          });
+      };
+    </script>
+
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+		<script src="assets/js/nav.js"></script>
+		<script src="assets/js/cropper.js"></script>
+		<script src="assets/js/slider_listener.js"></script>
+		<script src="assets/js/button_group_listeners.js"></script>
+		<script src="assets/js/base_generator.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+	</body>
+</html>
