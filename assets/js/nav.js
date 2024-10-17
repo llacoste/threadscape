@@ -36,12 +36,17 @@ navLinks.forEach(link => {
 
 document.getElementById('main').addEventListener('click', function (event) {
     if (event.target && event.target.id === 'get_started') {
-        event.preventDefault();
+        event.preventDefault(); // Prevent default behavior if necessary
 
-        const imageCropperLink = document.getElementById('image_cropper');
-        imageCropperLink.click();
-
+        // Scroll the nav element into view before simulating the navigation click
         const navElement = document.getElementById('nav');
         navElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        // Add a slight delay to allow scrolling before simulating the click
+        setTimeout(function() {
+            const imageCropperLink = document.getElementById('image_cropper');
+            imageCropperLink.click();
+        }, 250); // Adjust the delay as necessary
     }
 });
+

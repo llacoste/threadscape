@@ -40,7 +40,7 @@
             Diameter
           </div>
           <div class="col-7">
-            <input type="range" id="diameter_slider" min="6" max="122" value="24">
+            <input type="range" id="diameter_slider" min="12" max="122" value="24">
           </div>
           <div class="col-3">
             <input type="text" id="diameter_slider_value" value="24">
@@ -70,7 +70,7 @@
 </div>
 
 <script>
-  syncSliderAndInput('diameter_slider', 'diameter_slider_value', 6, 122);
+  syncSliderAndInput('diameter_slider', 'diameter_slider_value', 12, 122);
   syncSliderAndInput('pegs_slider', 'pegs_slider_value', 150, 720);
 
   setupButtonGroupListeners('base_shape_selection');

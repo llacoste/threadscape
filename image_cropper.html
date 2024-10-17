@@ -1,30 +1,38 @@
 <div class="container">
-	<center>
-		<!-- Custom button that triggers file input -->
-		<button id="custom-file-button" class="button large">Click to select an Image</button>
-		<input class="display_none" type="file" id="upload-image" accept="image/*" />
-		</br></br>
+	<div class="row">
+    <div class="col-8">
+			<h3>Original Image:</h3>
+				<section class="image_container">
+					<img id="image_to_crop" src="images/mandala_close.jpg" alt="Image to crop"/>
+				</section>
 
-		<div class="image_container">
-			<img id="image_to_crop" src="images/mandala_close.jpg" alt="Image to crop"/>
-		</div>
+			</br>
 
-		<!-- Control buttons -->
-		<div class="controls">
-			<button  id="rotate-left" class="button large">Rotate Left</button>
-			<button id="rotate-right" class="button large">Rotate Right</button>
-			<button id="zoom-in" class="button large">Zoom In</button>
-			<button id="zoom-out" class="button large">Zoom Out</button>
-			<button id="crop" class="button large">Crop</button>
-		</div>
+				<section>
+					<button id="custom-file-button" class="button primary fit">Click to select an Image</button>
+					<input class="display_none" type="file" id="upload-image" accept="image/*" />
+				</section>
 
-		<hr>
-		<!-- Cropped result -->
-		<div id="cropped-result">
-			<h3>Cropped Image:</h3>
-			<img id="cropped-image" src="" alt="After you select Crop above, your cropped image will appear here." />
+				<!-- Control buttons -->
+				<section class="controls">
+					<button  id="rotate-left" class="button large">Rotate Left</button>
+					<button id="rotate-right" class="button large">Rotate Right</button>
+					<button id="zoom-in" class="button large">Zoom In</button>
+					<button id="zoom-out" class="button large">Zoom Out</button>
+				</setion>
+
+				<section class="controls">
+					<button id="crop" class="button primary fit">Crop</button>
+				</setion>
 		</div>
-	</center>
+		<div class="col-4">
+			<div id="cropped-result">
+				<h3>Cropped Image:</h3>
+				<img id="cropped-image" src="" alt="After you select Crop above, your cropped image will appear here." />
+			</div>
+			<a id="download-button" class="button primary fit" download="cropped-image.png">Download Cropped Image</a>
+		</div>
+	</div>
 </div>
 
 <script>
@@ -93,5 +101,19 @@
 		const canvas = cropper.getCroppedCanvas();
 		const croppedImage = document.getElementById('cropped-image');
 		croppedImage.src = canvas.toDataURL('image/png'); // Display the cropped image
+	});
+
+	document.getElementById('crop').addEventListener('click', function() {
+			const croppedImage = document.getElementById('cropped-image');
+			
+			// Assuming you have the canvas of the cropped image
+			const canvas = cropper.getCroppedCanvas(); // Your Cropper.js instance
+
+			// Set the src of the cropped image to the canvas content (base64 data)
+			croppedImage.src = canvas.toDataURL('image/png');
+
+			// Update the download button's href with the image data URL
+			const downloadButton = document.getElementById('download-button');
+			downloadButton.href = croppedImage.src; // Set the image data URL as the href
 	});
 </script>

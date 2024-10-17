@@ -91,3 +91,10 @@ canvas {
   height: 100%;
   display: block;
 }
+
+.center-all {
+  display: flex;
+  justify-content: center; /* Horizontally centers the button */
+  align-items: center;     /* Vertically centers the button */
+  height: 100%;            /* Ensure the parent container has height to center vertically */
+}
