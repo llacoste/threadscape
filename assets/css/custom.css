@@ -40,6 +40,8 @@ input[type="range"]::-moz-range-thumb {
 .image_container {
   max-width: 75%;
   max-height: 1000px;
+  min-width: 500px;
+  min-height: 500px;
   margin: auto;
   text-align: center;
 }
@@ -49,13 +51,7 @@ img#image {
 }
 
 .controls {
-  margin-top: 20px;
-}
-
-.controls button {
-  margin-right: 10px;
-  padding: 10px 20px;
-  font-size: 16px;
+  margin-bottom: 20px;
 }
 
 #cropped-result {

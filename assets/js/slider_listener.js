@@ -2,6 +2,10 @@ function syncSliderAndInput(sliderId, inputId, min, max) {
   const slider = document.getElementById(sliderId);
   const input = document.getElementById(inputId);
 
+  // Set initial min and max values
+  slider.min = min;
+  slider.max = max;
+
   slider.oninput = function() {
       input.value = this.value;
   };
