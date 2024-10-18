@@ -25,8 +25,9 @@ function drawDots() {
   // Clear the canvas before drawing
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // Adjust the font size based on the number of dots and the diameter
-  const fontSize = Math.min(12, diameterInPixels / 50); // Scale down for smaller diameters
+  const text_padding = 20;
+  const dot_radius = 1;
+  const fontSize = 7;//Math.min(10, diameterInPixels / 50); // Scale down for smaller diameters
   ctx.font = `${fontSize}px Arial`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
@@ -40,12 +41,12 @@ function drawDots() {
 
       // Draw the dot
       ctx.beginPath();
-      ctx.arc(x, y, 5, 0, 2 * Math.PI);
+      ctx.arc(x, y, dot_radius, 0, 2 * Math.PI);
       ctx.fill();
 
       // Position the labels further out from the circle
-      const labelX = centerX + (radius + 25) * Math.cos(angle); // Increase the distance from the edge
-      const labelY = centerY + (radius + 25) * Math.sin(angle);
+      const labelX = centerX + (radius + text_padding) * Math.cos(angle); // Increase the distance from the edge
+      const labelY = centerY + (radius + text_padding) * Math.sin(angle);
       ctx.fillText(i, labelX, labelY);
     }
   }
@@ -66,13 +67,13 @@ function drawDots() {
         x = centerX - radius + distance;
         y = centerY - radius;
         labelX = x;
-        labelY = y - 20; // Position the label above the dot, with more space
+        labelY = y - text_padding; // Position the label above the dot, with more space
       } else if (distance < 2 * sideLength) {
         // Right side
         distance -= sideLength;
         x = centerX + radius;
         y = centerY - radius + distance;
-        labelX = x + 20; // Label to the right of the dot, with more space
+        labelX = x + text_padding; // Label to the right of the dot, with more space
         labelY = y;
       } else if (distance < 3 * sideLength) {
         // Bottom side
@@ -80,19 +81,19 @@ function drawDots() {
         x = centerX + radius - distance;
         y = centerY + radius;
         labelX = x;
-        labelY = y + 20; // Label below the dot, with more space
+        labelY = y + text_padding; // Label below the dot, with more space
       } else {
         // Left side
         distance -= 3 * sideLength;
         x = centerX - radius;
         y = centerY + radius - distance;
-        labelX = x - 20; // Label to the left of the dot, with more space
+        labelX = x - text_padding; // Label to the left of the dot, with more space
         labelY = y;
       }
 
       // Draw the dot
       ctx.beginPath();
-      ctx.arc(x, y, 5, 0, 2 * Math.PI);
+      ctx.arc(x, y, dot_radius, 0, 2 * Math.PI);
       ctx.fill();
 
       // Label the dot with more space outside the square
@@ -122,7 +123,17 @@ function setupUnitChangeListener() {
       const currentUnitButton = document.querySelector('#base_unit_selection .primary'); // Current active unit button
       const newUnit = this.textContent.trim()
       const currentUnit = newUnit === 'Inches' ? 'Centimeters' : 'Inches';
+      let min, max;
 
+      if (newUnit === 'Inches') {
+        min = 12;
+        max = 48;
+      } else if (newUnit === 'Centimeters') {
+        min = 30; // 12 inches to cm
+        max = 122; // 48 inches to cm
+      }
+
+      syncSliderAndInput('diameter_slider', 'diameter_slider_value', min, max);
 
       // Get the current diameter value
       let diameterValue = parseFloat(diameterInput.value);
@@ -238,7 +249,7 @@ function initBaseCanvas() {
   drawDots();
 }
 
-syncSliderAndInput('diameter_slider', 'diameter_slider_value', 12, 122);
+syncSliderAndInput('diameter_slider', 'diameter_slider_value', 12, 48);
 syncSliderAndInput('pegs_slider', 'pegs_slider_value', 150, 720);
 
 setupButtonGroupListeners('base_shape_selection');
