@@ -23,10 +23,10 @@ document.getElementById('upload-image').addEventListener('change', function (eve
   if (file) {
     const reader = new FileReader();
     reader.onload = function (e) {
-      image.src = e.target.result; // Set the new image source
-      initializeCropper(); // Reinitialize Cropper.js with the new image
+      image_to_crop.src = e.target.result;
+      initializeCropper();
     };
-    reader.readAsDataURL(file); // Read the file as a data URL
+    reader.readAsDataURL(file);
   }
 });
 
@@ -56,22 +56,10 @@ document.getElementById('zoom-out').addEventListener('click', () => {
 });
 
 // Crop
-document.getElementById('crop').addEventListener('click', () => {
-  const canvas = cropper.getCroppedCanvas();
-  const croppedImage = document.getElementById('cropped-image');
-  croppedImage.src = canvas.toDataURL('image/png'); // Display the cropped image
-});
-
 document.getElementById('crop').addEventListener('click', function () {
-  const croppedImage = document.getElementById('cropped-image');
-
-  // Assuming you have the canvas of the cropped image
-  const canvas = cropper.getCroppedCanvas(); // Your Cropper.js instance
-
-  // Set the src of the cropped image to the canvas content (base64 data)
+  croppedImage = document.getElementById('cropped-image');
+  canvas = cropper.getCroppedCanvas();
   croppedImage.src = canvas.toDataURL('image/png');
-
-  // Update the download button's href with the image data URL
-  const downloadButton = document.getElementById('download-button');
-  downloadButton.href = croppedImage.src; // Set the image data URL as the href
+  downloadButton = document.getElementById('download-button');
+  downloadButton.href = croppedImage.src;
 });

@@ -51,13 +51,7 @@ img#image {
 }
 
 .controls {
-  margin-top: 20px;
-}
-
-.controls button {
-  margin-right: 10px;
-  padding: 10px 20px;
-  font-size: 16px;
+  margin-bottom: 20px;
 }
 
 #cropped-result {
