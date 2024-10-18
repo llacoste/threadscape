@@ -42,8 +42,8 @@
 	<body class="is-preload">
 
 		<div id="loading">
-      <div class="spinner"></div>
-    </div>
+			<div class="spinner"></div>
+		</div>
 
 		<!-- Wrapper -->
 		<div id="wrapper" class="fade-in">
@@ -68,8 +68,10 @@
 				<ul id="navbar" class="links">
 					<li class="active"><a id="about" href="javascript:void(0)">About</a></li>
 					<li><a id="image_cropper" href="javascript:void(0)">Image Cropper</a></li>
-					<li><a id="instruction_generator" href="javascript:void(0)">Instruction Generator</a></li>
-					<li><a id="base_generator" href="javascript:void(0)">Base Generator</a></li>
+					<li><a id="instruction_generator" href="javascript:void(0)">Instruction
+							Generator</a></li>
+					<li><a id="base_generator" href="javascript:void(0)">Base
+							Generator</a></li>
 				</ul>
 				<ul class="icons">
 					<li><a href="https://github.com/llacoste/threadscape"
@@ -78,7 +80,261 @@
 			</nav>
 
 			<!-- Main -->
-			<div id="main"></div>
+			<!-- Main -->
+			<div id="main">
+				<div id="about_page" class="page-content">
+					<div class="post featured">
+						<header class="major">
+							<h2>Let's getting threading</h2>
+							<p>Transform your favorite images into stunning string art with
+								ThreadScape! This tool guides you step-by-step, showing how to weave
+								thread around a circular canvas of nails to bring your designs to
+								life.</p>
+						</header>
+						
+						<div class="box alt">
+							<div class="row gtr-50 gtr-uniform">
+								<div class="col-6"><span ><h3>Turn this:</h3></span></div>
+								<div class="col-6"><span ><h3>Into this:</h3></span></div>
+					
+								<div class="col-6"><span class="image fit"><img src="images/mandala_close.jpg" alt="" /></span></div>
+								<div class="col-6"><span class="image fit"><img src="images/mandala_strings.jpg" alt="" /></span></div>
+							</div>
+						</div>
+					
+						</br></br>
+					
+						<ul class="actions special">
+							<li><a id="get_started" class="button large">Let's get started</a></li>
+						</ul>
+					</div>
+				</div>
+
+				<div id="image_cropper_page" class="page-content" style="display: none;">
+					<div class="container">
+						<div class="row">
+							<div class="col-8">
+								<h3>Original Image:</h3>
+									<section class="image_container">
+										<img id="image_to_crop" src="images/mandala_close.jpg" alt="Image to crop"/>
+									</section>
+					
+								</br>
+					
+									<section>
+										<button id="custom-file-button" class="button primary fit">Click to select an Image</button>
+										<input class="display_none" type="file" id="upload-image" accept="image/*" />
+									</section>
+					
+									<!-- Control buttons -->
+									<section class="controls">
+										<button  id="rotate-left" class="button large">Rotate Left</button>
+										<button id="rotate-right" class="button large">Rotate Right</button>
+										<button id="zoom-in" class="button large">Zoom In</button>
+										<button id="zoom-out" class="button large">Zoom Out</button>
+									</setion>
+					
+									<section class="controls">
+										<button id="crop" class="button primary fit">Crop</button>
+									</setion>
+							</div>
+							<div class="col-4">
+								<div id="cropped-result">
+									<h3>Cropped Image:</h3>
+									<img id="cropped-image" src="" alt="After you select Crop above, your cropped image will appear here." />
+								</div>
+								<a id="download-button" class="button primary fit" download="cropped-image.png">Download Cropped Image</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="instruction_generator_page" class="page-content"
+					style="display: none;">
+					<div class="container">
+						<div class="row">
+							<div class="col-6">
+								<section>
+									<h3>Preview</h3>
+								</section>
+								<section>
+									<div class="canvas-container">
+										<canvas id="instruction_canvas"></canvas>
+								</div>
+								</section>
+							</div>
+							<div class="col-6">
+								<section class="file-section" style="margin-bottom: 25px;">
+									<button id="input-file-button" class="button large">Click to select an Image</button>
+									<input class="display_none" type="file" id="input-image" accept="image/*" />
+								</section>
+								<section>
+									<h3>Parameters</h3>
+									<div class="row">
+										<div class="col-4">
+											Shape
+										</div>
+										<div class="col-8">
+											<ul id="instruction_shape_selection" class="actions small">
+												<li><a href="javascript:void(0)" class="button primary small">Circle</a></li>
+												<li><a href="javascript:void(0)" class="button small">Square</a></li>
+											</ul>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-4">
+											Quality
+										</div>
+										<div class="col-8">
+											<ul id="instruction_quality_selection" class="actions small">
+												<li><a href="javascript:void(0)" class="button primary small">Low</a></li>
+												<li><a href="javascript:void(0)" class="button small">Medium</a></li>
+												<li><a href="javascript:void(0)" class="button small">High</a></li>
+											</ul>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-4">
+											Mode
+										</div>
+										<div class="col-8">
+											<ul id="instruction_mode_selection" class="actions small">
+												<li><a href="javascript:void(0)" class="button primary small">Monochrome</a></li>
+												<li><a href="javascript:void(0)" class="button small">Color</a></li>
+											</ul>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-2">
+											Pegs
+										</div>
+										<div class="col-7">
+											<input type="range" id="pegs_slider" min="150" max="1200" value="360">
+										</div>
+										<div class="col-3">
+											<input type="text" id="pegs_slider_value" value="360">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-2">
+											Segments
+										</div>
+										<div class="col-7">
+											<input type="range" id="segments_slider" min="0" max="10000" value="5000">
+										</div>
+										<div class="col-3">
+											<input type="text" id="segments_slider_value" value="5000">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-2">
+											Opacity
+										</div>
+										<div class="col-7">
+											<input type="range" id="opacity_slider" min="1" max="5" value="2">
+										</div>
+										<div class="col-3">
+											<input type="text" id="opacity_slider_value" value="2">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-2">
+											Thickness
+										</div>
+										<div class="col-7">
+											<input type="range" id="thickness_slider" min="25" max="100" value="50">
+										</div>
+										<div class="col-3">
+											<input type="text" id="thickness_slider_value" value="50">
+										</div>
+									</div>
+								</section>
+								<hr>
+								<section>
+									<h3>Output</h3>
+									<ul class="actions fit">
+										<li><a href="javascript:void(0)" class="button fit">Download Processed Image</a></li>
+										<li><a href="javascript:void(0)" class="button fit">Download Instructions</a></li>
+									</ul>
+								</section>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="base_generator_page" class="page-content" style="display: none;">
+					<div class="container">
+						<div class="row">
+							<div class="col-6">
+								<section>
+									<h3>Base Preview</h3>
+								</section>
+								<section>
+									<div class="canvas-container">
+										<canvas id="base_canvas"></canvas>
+								</div>
+								</section>
+							</div>
+							<div class="col-6">
+								<section>
+									<h3>Parameters</h3>
+									<div class="row">
+										<div class="col-4">
+											Shape
+										</div>
+										<div class="col-8">
+											<ul id="base_shape_selection" class="actions small">
+												<li><a id="base_circle_button" href="javascript:void(0)" class="button primary small">Circle</a></li>
+												<li><a id="base_square_button" href="javascript:void(0)" class="button small">Square</a></li>
+											</ul>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-4">
+											Units
+										</div>
+										<div class="col-8">
+											<ul id="base_unit_selection" class="actions small">
+												<li><a href="javascript:void(0)" class="button primary small">Inches</a></li>
+												<li><a href="javascript:void(0)" class="button small">Centimeters</a></li>
+											</ul>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-2">
+											Diameter
+										</div>
+										<div class="col-7">
+											<input type="range" id="diameter_slider" min="12" max="122" value="24">
+										</div>
+										<div class="col-3">
+											<input type="text" id="diameter_slider_value" value="24">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-2">
+											Pegs
+										</div>
+										<div class="col-7">
+											<input type="range" id="pegs_slider" min="150" max="720" value="360">
+										</div>
+										<div class="col-3">
+											<input type="text" id="pegs_slider_value" value="360">
+										</div>
+									</div>
+								</section>
+								<hr>
+								<section>
+									<h3>Output</h3>
+									<ul class="actions fit">
+										<li><button onclick="generatePDF()" class="button primary fit">Download Base PDF</button></li>
+									</ul>
+								</section>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
 			<!-- Footer -->
 			<footer id="footer">
@@ -95,12 +351,6 @@
 		<script>
       window.onload = function () {
         document.getElementById('loading').style.display = 'none';
-
-        fetch('about.html')
-          .then(response => response.text())
-          .then(data => {
-            document.getElementById('main').innerHTML = data;
-          });
       };
     </script>
 
@@ -117,6 +367,9 @@
 		<script src="assets/js/slider_listener.js"></script>
 		<script src="assets/js/button_group_listeners.js"></script>
 		<script src="assets/js/base_generator.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+		<script src="assets/js/image_cropper.js"></script>
+		<script src="assets/js/instruction_generator.js"></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 	</body>
 </html>
