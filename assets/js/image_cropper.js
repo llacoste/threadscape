@@ -56,10 +56,23 @@ document.getElementById('zoom-out').addEventListener('click', () => {
 });
 
 // Crop
+// document.getElementById('crop').addEventListener('click', function () {
+//   croppedImage = document.getElementById('cropped-image');
+//   canvas = cropper.getCroppedCanvas();
+//   croppedImage.src = canvas.toDataURL('image/png');
+//   downloadButton = document.getElementById('download-button');
+//   downloadButton.href = croppedImage.src;
+// });
+
 document.getElementById('crop').addEventListener('click', function () {
-  croppedImage = document.getElementById('cropped-image');
-  canvas = cropper.getCroppedCanvas();
-  croppedImage.src = canvas.toDataURL('image/png');
-  downloadButton = document.getElementById('download-button');
-  downloadButton.href = croppedImage.src;
+  const canvas = cropper.getCroppedCanvas(); // Get the cropped image as a canvas
+  const imageURL = canvas.toDataURL('image/png'); // Convert the canvas to a data URL
+
+  // Create a temporary link element
+  const tempLink = document.createElement('a');
+  tempLink.href = imageURL;
+  tempLink.download = 'cropped-image.png'; // Set the file name for download
+
+  // Trigger a click event on the link to start the download
+  tempLink.click();
 });
