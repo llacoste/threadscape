@@ -73,7 +73,7 @@
 							Generator</a></li>
 					<li><a id="base_generator" >Base
 							Generator</a></li>
-					<li><a id="walkthrough" >Walkthrough</a></li>
+					<!-- <li><a id="walkthrough" >Walkthrough</a></li> -->
 				</ul>
 				<ul class="icons">
 					<li><a href="https://github.com/llacoste/threadscape"
@@ -140,46 +140,64 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-6">
-								<section>
-									<h3>Preview</h3>
-								</section>
-								<section>
-									<div class="canvas-container">
-										<canvas id="instruction_canvas"></canvas>
+								<h4 id="status" style="margin: 0px;">Please wait, generator is loading...</h4>
+								<div class="row">
+									<div class="col-12">
+										<div id="step1" class="center hidden">
+											<div class="caption">Original Image:</div>
+											<img class="centerImage" style="margin-top: 10px;" id="source_image" alt="No Image" />
+										</div>
+										<div id="step2" class="center hidden">
+											<div class="caption">Cropped and Grayscaled:</div>
+											<canvas class="centerCanvasMedium" id="original_img_preview" ></canvas>
+										</div>
+										<div id="step3" class="center hidden">
+											<div id="draw_status"></div>
+											<center>
+													<canvas class="centerCanvasMedium" id="string_art_canvas" ></canvas>
+											</center>
+										</div>
+										<div id="step4" class="center hidden">
+											<h4>Output</h4>
+											<ul class="actions fit">
+												<li><a id="download_processed_image" class="button fit">Download Processed Image</a></li>
+												<li><a id="download_instructions" class="button fit">Download Instructions</a></li>
+											</ul>
+										</div>
+									</div>
 								</div>
-								</section>
 							</div>
 							<div class="col-6">
 								<section class="file-section" style="margin-bottom: 25px;">
 									<button id="input-file-button" class="button large">Click to select an Image</button>
-									<input class="display_none" type="file" id="input-image" accept="image/*" />
+									<input class="display_none" type="file" id="image_input" accept="image/*" />
 								</section>
 								<section>
 									<h3>Parameters</h3>
-									<div class="row">
+									<div class="row not_yet_implemented">
 										<div class="col-4">
 											Shape
 										</div>
 										<div class="col-8">
 											<ul id="instruction_shape_selection" class="actions small">
-												<li><a  class="button primary small">Circle</a></li>
-												<li><a  class="button small">Square</a></li>
+												<li><a class="button primary small">Circle</a></li>
+												<li><a class="button small">Square</a></li>
 											</ul>
 										</div>
 									</div>
-									<div class="row">
+									<div class="row not_yet_implemented">
 										<div class="col-4">
 											Quality
 										</div>
 										<div class="col-8">
 											<ul id="instruction_quality_selection" class="actions small">
-												<li><a  class="button primary small">Low</a></li>
-												<li><a  class="button small">Medium</a></li>
-												<li><a  class="button small">High</a></li>
+												<li><a class="button primary small">Low</a></li>
+												<li><a class="button small">Medium</a></li>
+												<li><a class="button small">High</a></li>
 											</ul>
 										</div>
 									</div>
-									<div class="row">
+									<div class="row not_yet_implemented">
 										<div class="col-4">
 											Mode
 										</div>
@@ -191,10 +209,31 @@
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-2">
-											Pegs
+										<div class="col-6">
+											<p class="tooltip">
+												Diameter (Inches)
+												<span class="tooltip-text">The diameter of the base.</span>
+											</p>
 										</div>
-										<div class="col-7">
+									</div>
+									<div class="row">
+										<div class="col-9">
+											<input type="range" id="instruction_diameter_slider" min="12" max="48" value="24">
+										</div>
+										<div class="col-3">
+											<input type="text" id="instruction_diameter_slider_value" value="24">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-6">
+											<p class="tooltip">
+												Peg Count
+												<span class="tooltip-text">The number of pegs on the base.</span>
+											</p>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-9">
 											<input type="range" id="pegs_slider" min="150" max="1200" value="360">
 										</div>
 										<div class="col-3">
@@ -202,17 +241,70 @@
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-2">
-											Segments
-										</div>
-										<div class="col-7">
-											<input type="range" id="segments_slider" min="0" max="10000" value="5000">
-										</div>
-										<div class="col-3">
-											<input type="text" id="segments_slider_value" value="5000">
+										<div class="col-6">
+											<p class="tooltip">
+												Line Count
+												<span class="tooltip-text">The number of lines that makes up the image.</span>
+											</p>
 										</div>
 									</div>
 									<div class="row">
+										<div class="col-9">
+											<input type="range" id="segments_slider" min="0" max="10000" value="1500">
+										</div>
+										<div class="col-3">
+											<input type="text" id="segments_slider_value" value="1500">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-6">
+											<p class="tooltip">
+												Line Weight
+												<span class="tooltip-text">Adjusting this affects of lines are selected while processing. You can think of this as contrast.</span>
+											</p>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-9">
+											<input type="range" id="weight_slider" min="1" max="100" value="50">
+										</div>
+										<div class="col-3">
+											<input type="text" id="weight_slider_value" value="50">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-6">
+											<p class="tooltip">
+												Minimum Peg Distance
+												<span class="tooltip-text">This adjusts the minimum distance two pegs must be from one another when selecting lines.</span>
+											</p>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-9">
+											<input type="range" id="minimum_peg_distance_slider" min="1" max="100" value="20">
+										</div>
+										<div class="col-3">
+											<input type="text" id="minimum_peg_distance_slider_value" value="20">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-6">
+											<p class="tooltip">
+												Scale
+												<span class="tooltip-text">This adjusts the quality of the rendered preview image. A higher value yields a better image; however, this will dramatically increase resource usage.</span>
+											</p>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-9">
+											<input type="range" id="scale_slider" min="1" max="100" value="20">
+										</div>
+										<div class="col-3">
+											<input type="text" id="scale_slider_value" value="20">
+										</div>
+									</div>
+									<div class="row not_yet_implemented">
 										<div class="col-2">
 											Opacity
 										</div>
@@ -223,7 +315,7 @@
 											<input type="text" id="opacity_slider_value" value="2">
 										</div>
 									</div>
-									<div class="row">
+									<div class="row not_yet_implemented">
 										<div class="col-2">
 											Thickness
 										</div>
@@ -234,14 +326,6 @@
 											<input type="text" id="thickness_slider_value" value="50">
 										</div>
 									</div>
-								</section>
-								<hr>
-								<section>
-									<h3>Output</h3>
-									<ul class="actions fit">
-										<li><a  class="button fit">Download Processed Image</a></li>
-										<!-- <li><a  class="button fit">Download Instructions</a></li> -->
-									</ul>
 								</section>
 							</div>
 						</div>
@@ -258,7 +342,7 @@
 							<div class="col-12">
 								<div id="incrementalDrawing">
 									<span id="incrementalCurrentStep">Current Line: 1 |  Pin 0 to 144</span>
-									<div id="drawStatus"></div>
+									<div id="draw_status"></div>
 									<canvas class="centerCanvasLarge" id="canvasOutput3" width="1000" height="1000"></canvas>
 									<div style="height: 30px;">
 											<button class="btn btn-warning" style="float: left;" onclick="lastStep();">&lt;&lt; Last Step</button>
@@ -286,7 +370,7 @@
 							<div class="col-6">
 								<section>
 									<h3>Parameters</h3>
-									<div class="row">
+									<div class="row not_yet_implemented">
 										<div class="col-4">
 											Shape
 										</div>
@@ -297,7 +381,7 @@
 											</ul>
 										</div>
 									</div>
-									<div class="row">
+									<div class="row row not_yet_implemented">
 										<div class="col-4">
 											Units
 										</div>
@@ -309,10 +393,12 @@
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-2">
-											Diameter
+										<div class="col-6">
+											Diameter (Inches)
 										</div>
-										<div class="col-7">
+									</div>
+									<div class="row">
+										<div class="col-9">
 											<input type="range" id="diameter_slider" min="12" max="48" value="24">
 										</div>
 										<div class="col-3">
@@ -323,7 +409,9 @@
 										<div class="col-2">
 											Pegs
 										</div>
-										<div class="col-7">
+									</div>
+									<div class="row">
+										<div class="col-9">
 											<input type="range" id="pegs_slider" min="150" max="720" value="360">
 										</div>
 										<div class="col-3">
@@ -372,14 +460,17 @@
 		<script src="assets/js/util.js"></script>
 		<script src="assets/js/main.js"></script>
 		<script src="assets/js/nav.js"></script>
+		<script src="assets/js/numjs.js"></script>
 		<script src="assets/js/cropper.js"></script>
 		<script src="assets/js/slider_listener.js"></script>
 		<script src="assets/js/button_group_listeners.js"></script>
 		<script src="assets/js/base_generator.js"></script>
 		<script src="assets/js/image_cropper.js"></script>
+		<script src="assets/js/string_art_generator.js"></script>
 		<script src="assets/js/instruction_generator.js"></script>
 		<script src="https://kit.fontawesome.com/81b3be42c1.js" crossorigin="anonymous"></script>
 		<script
 			src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+		<script async src="assets/js/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
 	</body>
 </html>
