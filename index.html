@@ -140,14 +140,41 @@
 					<div class="container">
 						<div class="row">
 							<div class="col-6">
-								<section>
+								<h4 id="status" style="margin: 0px;">Please wait, generator is loading...</h4>
+								<!-- <section>
 									<h3>Preview</h3>
 								</section>
 								<section>
 									<div class="canvas-container">
 										<canvas id="instruction_canvas"></canvas>
 								</div>
-								</section>
+								</section> -->
+								<div class="row">
+									<div class="col-12">
+										<div id="step1" class="center hidden">
+											<div class="caption">Original Image:</div>
+											<img class="centerImage" style="margin-top: 10px;" id="imageSrc" alt="No Image" />
+										</div>
+										<div id="step2" class="center hidden">
+											<div class="caption">Cropped and Grayscaled:</div>
+											<canvas class="centerCanvasMedium" id="canvasOutput" ></canvas>
+										</div>
+										<div id="step3" class="center hidden">
+											<div id="drawStatus"></div>
+											<center>
+													<canvas class="centerCanvasMedium" id="canvasOutput2" ></canvas>
+											</center>
+										</div>
+										<div id="showPins" class="center hidden">
+											<hr>
+											<h3>Output</h3>
+											<ul class="actions fit">
+												<li><a id="download_processed_image" class="button fit">Download Processed Image</a></li>
+												<li><a id="download_instructions" class="button fit">Download Instructions</a></li>
+											</ul>
+										</div>
+									</div>
+								</div>
 							</div>
 							<div class="col-6">
 								<section class="file-section" style="margin-bottom: 25px;">
@@ -234,14 +261,6 @@
 											<input type="text" id="thickness_slider_value" value="50">
 										</div>
 									</div>
-								</section>
-								<hr>
-								<section>
-									<h3>Output</h3>
-									<ul class="actions fit">
-										<li><a  class="button fit">Download Processed Image</a></li>
-										<!-- <li><a  class="button fit">Download Instructions</a></li> -->
-									</ul>
 								</section>
 							</div>
 						</div>
@@ -378,8 +397,11 @@
 		<script src="assets/js/base_generator.js"></script>
 		<script src="assets/js/image_cropper.js"></script>
 		<script src="assets/js/instruction_generator.js"></script>
+		<script src="assets/js/string_art_generator.js"></script>
 		<script src="https://kit.fontawesome.com/81b3be42c1.js" crossorigin="anonymous"></script>
+		<script src="assets/js/numjs.js"></script>
 		<script
 			src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+		<script async src="assets/js/opencv.js" onload="onOpenCvReady();" type="text/javascript"></script>
 	</body>
 </html>
