@@ -2,6 +2,11 @@
 //      Creation Assistant
 //********************************
 
+// Broke pinsOutput
+
+var incrementalDrawing = document.getElementById("incrementalDrawing");
+var incrementalCurrentStep = document.getElementById("incrementalCurrentStep");
+var ctx3=document.getElementById("canvasOutput3").getContext("2d");
 
 var pointIndex = 0;
 var lastStepImage;
@@ -51,7 +56,7 @@ function startDrawing(){
 
   let j = 0;
   (function codeBlock(){
-      if(j < MAX_LINES - 1){
+      if(j < num_segements() - 1){
           //incrementalCurrentStep.textContent = "Current Line: " + (pointIndex + 1) + " |  Pin " + line_sequence[pointIndex] + " to " + line_sequence[pointIndex + 1];
           pointIndex++;
           ctx3.beginPath();
@@ -68,7 +73,7 @@ function startDrawing(){
 }
 
 function nextStep(){
-  if(pointIndex > MAX_LINES - 1){ return;}
+  if(pointIndex > num_segements() - 1){ return;}
   incrementalCurrentStep.textContent = "Current Line: " + (pointIndex + 1) + " |  Pin " + line_sequence[pointIndex] + " to " + line_sequence[pointIndex + 1];
 
   if(pointIndex > 0){
@@ -125,8 +130,8 @@ function CalculatePins(){
   center = IMG_SIZE / 2;
   radius = IMG_SIZE / 2 - 1/2
 
-  for(i=0; i < N_PINS; i++){
-      angle = 2 * Math.PI * i / N_PINS;
+  for(i=0; i < num_pegs(); i++){
+      angle = 2 * Math.PI * i / num_pegs();
       pin_coords.push([Math.floor(center + radius * Math.cos(angle)),
           Math.floor(center + radius * Math.sin(angle))]);
   }

@@ -1,35 +1,19 @@
 var IMG_SIZE = 500;
-var MAX_LINES = 1500;
-var N_PINS = 360;
 var MIN_LOOP = 20;
 var MIN_DISTANCE = 20;
-var LINE_WEIGHT = 50;
 var FILENAME = "";
 var SCALE = 20;
 var HOOP_DIAMETER = 0.625;
 
-var img;
-
 // set up element variables
-var imgElement = document.getElementById("imageSrc")
-var inputElement = document.getElementById("input-image");
-inputElement.addEventListener("change", (e) => {
-  imgElement.src = URL.createObjectURL(e.target.files[0]);
-}, false);
-var ctx=document.getElementById("canvasOutput").getContext("2d");
-var ctx2=document.getElementById("canvasOutput2").getContext("2d");
-var ctx3=document.getElementById("canvasOutput3").getContext("2d");
+var imgElement = document.getElementById("source_image")
+var inputElement = document.getElementById("image_input");
+var original_img_preview_canvas=document.getElementById("original_img_preview").getContext("2d");
+var string_art_canvas=document.getElementById("string_art_canvas").getContext("2d");
 var status_bar = document.getElementById("status");
-var drawStatus = document.getElementById("drawStatus");
-var showPins = document.getElementById("showPins");
-var pinsOutput = document.getElementById("pinsOutput");
-var incrementalDrawing = document.getElementById("incrementalDrawing");
-var incrementalCurrentStep = document.getElementById("incrementalCurrentStep");
-var numberOfPins = document.getElementById("numberOfPins");
-var numberOfLines = document.getElementById("numberOfLines");
-var lineWeight = document.getElementById("lineWeight");
+var draw_status = document.getElementById("draw_status");
+var string_art_output = document.getElementById("string_art_output");
 
-var length;
 var R = {};
 
 //pre initilization
@@ -61,16 +45,16 @@ var listenForKeys = false;
 imgElement.onload = function() {
   listenForKeys = false;
   showStep(1);
-  showPins.classList.add('hidden');
+  string_art_output.classList.add('hidden');
   incrementalDrawing.classList.add('hidden');
   // Take uploaded picture, square up and put on canvas
   base_image = new Image();
   base_image.src = imgElement.src;
-  ctx.canvas.width = IMG_SIZE;
-  ctx.canvas.height = IMG_SIZE;
-  ctx2.canvas.weight = IMG_SIZE * 2;
-  ctx2.canvas.height = IMG_SIZE * 2;
-  ctx.clearRect(0,0, IMG_SIZE, IMG_SIZE);
+  original_img_preview_canvas.canvas.width = IMG_SIZE;
+  original_img_preview_canvas.canvas.height = IMG_SIZE;
+  string_art_canvas.canvas.weight = IMG_SIZE * 2;
+  string_art_canvas.canvas.height = IMG_SIZE * 2;
+  original_img_preview_canvas.clearRect(0,0, IMG_SIZE, IMG_SIZE);
 
   var selectedWidth = base_image.width;
   var selectedHeight = base_image.height;
@@ -87,12 +71,11 @@ imgElement.onload = function() {
       xOffset = Math.floor((base_image.width - base_image.height) / 2)
   }
 
-  ctx.drawImage(base_image, xOffset, yOffset, selectedWidth, selectedHeight, 0, 0, IMG_SIZE, IMG_SIZE);
-  length = IMG_SIZE;
+  original_img_preview_canvas.drawImage(base_image, xOffset, yOffset, selectedWidth, selectedHeight, 0, 0, IMG_SIZE, IMG_SIZE);
 
   // make grayscale by averaging the RGB channels.
   // extract out the R channel because that's all we need and push graysacle image onto canvas
-  var imgPixels = ctx.getImageData(0, 0, IMG_SIZE, IMG_SIZE);
+  var imgPixels = original_img_preview_canvas.getImageData(0, 0, IMG_SIZE, IMG_SIZE);
   R = img_result = nj.ones([IMG_SIZE, IMG_SIZE ]).multiply(0xff);
   var rdata = [];     
   for(var y = 0; y < imgPixels.height; y++){
@@ -106,14 +89,14 @@ imgElement.onload = function() {
       }
   }
   R.selection.data = rdata;
-  ctx.putImageData(imgPixels, 0, 0, 0, 0, IMG_SIZE, IMG_SIZE);
+  original_img_preview_canvas.putImageData(imgPixels, 0, 0, 0, 0, IMG_SIZE, IMG_SIZE);
 
   //circle crop canvas
-  ctx.globalCompositeOperation='destination-in';
-  ctx.beginPath();
-  ctx.arc(IMG_SIZE/2,IMG_SIZE/2, IMG_SIZE/2, 0, Math.PI*2);
-  ctx.closePath();
-  ctx.fill();
+  original_img_preview_canvas.globalCompositeOperation='destination-in';
+  original_img_preview_canvas.beginPath();
+  original_img_preview_canvas.arc(IMG_SIZE/2,IMG_SIZE/2, IMG_SIZE/2, 0, Math.PI*2);
+  original_img_preview_canvas.closePath();
+  original_img_preview_canvas.fill();
 
   // start processing
   NonBlockingCalculatePins();    
@@ -122,13 +105,13 @@ imgElement.onload = function() {
 function NonBlockingCalculatePins(){
   status_bar.textContent = "Calculating pins...";
   pin_coords = [];
-  center = length / 2;
-  radius = length / 2 - 1/2
+  center = diameter() / 2;
+  radius = diameter() / 2 - 1/2
   let i = 0;
 
   (function codeBlock(){
-      if(i < N_PINS){
-          angle = 2 * Math.PI * i / N_PINS;
+      if(i < num_pegs()){
+          angle = 2 * Math.PI * i / num_pegs();
           pin_coords.push([Math.floor(center + radius * Math.cos(angle)),
               Math.floor(center + radius * Math.sin(angle))]);
           i++;
@@ -143,15 +126,15 @@ function NonBlockingCalculatePins(){
 
 function NonBlockingPrecalculateLines(){
   status_bar.textContent = "Precalculating all lines...";
-  line_cache_y = Array.from({ length: (N_PINS * N_PINS) });
-  line_cache_x = Array.from({ length: (N_PINS * N_PINS) });
-  line_cache_length = Array.from({ length: (N_PINS * N_PINS) }).map(Function.call, function(){return 0;});
-  line_cache_weight = Array.from({ length: (N_PINS * N_PINS) }).map(Function.call, function(){return 1;});
+  line_cache_y = Array.from({ length: (num_pegs() * num_pegs()) });
+  line_cache_x = Array.from({ length: (num_pegs() * num_pegs()) });
+  line_cache_length = Array.from({ length: (num_pegs() * num_pegs()) }).map(Function.call, function(){return 0;});
+  line_cache_weight = Array.from({ length: (num_pegs() * num_pegs()) }).map(Function.call, function(){return 1;});
   let a = 0;
 
   (function codeBlock(){
-      if(a < N_PINS){
-          for (b = a + MIN_DISTANCE; b < N_PINS; b++) {
+      if(a < num_pegs()){
+          for (b = a + MIN_DISTANCE; b < num_pegs(); b++) {
               x0 = pin_coords[a][0];
               y0 = pin_coords[a][1];
           
@@ -162,12 +145,12 @@ function NonBlockingPrecalculateLines(){
               xs = linspace(x0, x1, d);
               ys = linspace(y0, y1, d);
 
-              line_cache_y[b*N_PINS + a] = ys;
-              line_cache_y[a*N_PINS + b] = ys;
-              line_cache_x[b*N_PINS + a] = xs;
-              line_cache_x[a*N_PINS + b] = xs;
-              line_cache_length[b*N_PINS + a] = d;
-              line_cache_length[a*N_PINS + b] = d;
+              line_cache_y[b*num_pegs() + a] = ys;
+              line_cache_y[a*num_pegs() + b] = ys;
+              line_cache_x[b*num_pegs() + a] = xs;
+              line_cache_x[a*num_pegs() + b] = xs;
+              line_cache_length[b*num_pegs() + a] = d;
+              line_cache_length[a*num_pegs() + b] = d;
           }
           a++;
           setTimeout(codeBlock, 0);
@@ -195,7 +178,7 @@ function NonBlockingLineCalculator(){
   let l = 0;
 
   (function codeBlock(){
-      if(l < MAX_LINES){
+      if(l < num_segements()){
           if(l%10 == 0){
               draw();
           }
@@ -203,16 +186,16 @@ function NonBlockingLineCalculator(){
           max_err = -1;
           best_pin = -1;
 
-          for(offset=MIN_DISTANCE; offset < N_PINS - MIN_DISTANCE; offset++){
-              test_pin = (pin + offset) % N_PINS;
+          for(offset=MIN_DISTANCE; offset < num_pegs() - MIN_DISTANCE; offset++){
+              test_pin = (pin + offset) % num_pegs();
               if(last_pins.includes(test_pin)){
                   continue;
               }else {
 
-                  xs = line_cache_x[test_pin * N_PINS + pin];
-                  ys = line_cache_y[test_pin * N_PINS + pin];
+                  xs = line_cache_x[test_pin * num_pegs() + pin];
+                  ys = line_cache_y[test_pin * num_pegs() + pin];
 
-                  line_err = getLineErr(error, ys, xs) * line_cache_weight[test_pin * N_PINS + pin];
+                  line_err = getLineErr(error, ys, xs) * line_cache_weight[test_pin * num_pegs() + pin];
 
                   if( line_err > max_err){
                       max_err = line_err;
@@ -223,9 +206,9 @@ function NonBlockingLineCalculator(){
 
           line_sequence.push(best_pin);
 
-          xs = line_cache_x[best_pin * N_PINS + pin];
-          ys = line_cache_y[best_pin * N_PINS + pin];
-          weight = LINE_WEIGHT * line_cache_weight[best_pin * N_PINS + pin];
+          xs = line_cache_x[best_pin * num_pegs() + pin];
+          ys = line_cache_y[best_pin * num_pegs() + pin];
+          weight = line_weight() * line_cache_weight[best_pin * num_pegs() + pin];
           
           line_mask = nj.zeros([IMG_SIZE, IMG_SIZE], 'float64');
           line_mask = setLine(line_mask, ys, xs, weight);
@@ -253,7 +236,7 @@ function NonBlockingLineCalculator(){
           pin = best_pin;
 
           //update status
-          drawStatus.textContent = l + " Lines drawn | " + Math.round((l / MAX_LINES) * 100) + "% complete";
+          draw_status.textContent = l + " Lines drawn | " + Math.round((l / num_segements()) * 100) + "% complete";
 
           l++;
           setTimeout(codeBlock, 0);
@@ -267,7 +250,7 @@ function draw(){
   let dsize = new cv.Size(IMG_SIZE * 2, IMG_SIZE * 2);
   let dst = new cv.Mat();
   cv.resize(result, dst, dsize, 0, 0, cv.INTER_AREA);
-  cv.imshow('canvasOutput2', dst);
+  cv.imshow('string_art_canvas', dst);
   dst.delete();
 }
 
@@ -276,12 +259,12 @@ function Finalize() {
   let dst = new cv.Mat();
   cv.resize(result, dst, dsize, 0, 0, cv.INTER_AREA);
 
-  drawStatus.textContent = MAX_LINES + " Lines drawn | 100% complete";
+  draw_status.textContent = num_segements() + " Lines drawn | 100% complete";
 
-  cv.imshow('canvasOutput2', dst);
+  cv.imshow('string_art_canvas', dst);
   console.log(line_sequence);
   status_bar.textContent = "Complete";
-  showPins.classList.remove('hidden');
+  string_art_output.classList.remove('hidden');
   dst.delete(); result.delete();
   window.scrollTo({ top: 5000, left: 0, behavior: 'smooth' });
 }
@@ -369,4 +352,24 @@ function linspace(a,b,n) {
   n--;
   for(i=n;i>=0;i--) { ret[i] = Math.floor((i*b+(n-i)*a)/n); }
   return ret;
+}
+
+// Helper functions for interacting with UI:
+function num_segements() {
+  segments_slider_value = document.getElementById('segments_slider_value');
+  return parseInt(segments_slider_value.value, 10);
+}
+
+function num_pegs() {
+  pegs_slider_value = document.getElementById('pegs_slider_value');
+  return parseInt(pegs_slider_value.value, 10);
+}
+
+function line_weight() {
+  line_weight_slider_value = document.getElementById('weight_slider_value');
+  return parseInt(line_weight_slider_value.value, 10);
+}
+
+function diameter(){
+  return 500
 }

@@ -141,32 +141,23 @@
 						<div class="row">
 							<div class="col-6">
 								<h4 id="status" style="margin: 0px;">Please wait, generator is loading...</h4>
-								<!-- <section>
-									<h3>Preview</h3>
-								</section>
-								<section>
-									<div class="canvas-container">
-										<canvas id="instruction_canvas"></canvas>
-								</div>
-								</section> -->
 								<div class="row">
 									<div class="col-12">
 										<div id="step1" class="center hidden">
 											<div class="caption">Original Image:</div>
-											<img class="centerImage" style="margin-top: 10px;" id="imageSrc" alt="No Image" />
+											<img class="centerImage" style="margin-top: 10px;" id="source_image" alt="No Image" />
 										</div>
 										<div id="step2" class="center hidden">
 											<div class="caption">Cropped and Grayscaled:</div>
-											<canvas class="centerCanvasMedium" id="canvasOutput" ></canvas>
+											<canvas class="centerCanvasMedium" id="original_img_preview" ></canvas>
 										</div>
 										<div id="step3" class="center hidden">
-											<div id="drawStatus"></div>
+											<div id="draw_status"></div>
 											<center>
-													<canvas class="centerCanvasMedium" id="canvasOutput2" ></canvas>
+													<canvas class="centerCanvasMedium" id="string_art_canvas" ></canvas>
 											</center>
 										</div>
-										<div id="showPins" class="center hidden">
-											<hr>
+										<div id="string_art_output" class="center hidden">
 											<h3>Output</h3>
 											<ul class="actions fit">
 												<li><a id="download_processed_image" class="button fit">Download Processed Image</a></li>
@@ -179,7 +170,7 @@
 							<div class="col-6">
 								<section class="file-section" style="margin-bottom: 25px;">
 									<button id="input-file-button" class="button large">Click to select an Image</button>
-									<input class="display_none" type="file" id="input-image" accept="image/*" />
+									<input class="display_none" type="file" id="image_input" accept="image/*" />
 								</section>
 								<section>
 									<h3>Parameters</h3>
@@ -233,13 +224,24 @@
 											Segments
 										</div>
 										<div class="col-7">
-											<input type="range" id="segments_slider" min="0" max="10000" value="5000">
+											<input type="range" id="segments_slider" min="0" max="10000" value="2000">
 										</div>
 										<div class="col-3">
-											<input type="text" id="segments_slider_value" value="5000">
+											<input type="text" id="segments_slider_value" value="2000">
 										</div>
 									</div>
 									<div class="row">
+										<div class="col-2">
+											Weight
+										</div>
+										<div class="col-7">
+											<input type="range" id="weight_slider" min="1" max="100" value="50">
+										</div>
+										<div class="col-3">
+											<input type="text" id="weight_slider_value" value="50">
+										</div>
+									</div>
+									<div class="row not_yet_implemented">
 										<div class="col-2">
 											Opacity
 										</div>
@@ -277,7 +279,7 @@
 							<div class="col-12">
 								<div id="incrementalDrawing">
 									<span id="incrementalCurrentStep">Current Line: 1 |  Pin 0 to 144</span>
-									<div id="drawStatus"></div>
+									<div id="draw_status"></div>
 									<canvas class="centerCanvasLarge" id="canvasOutput3" width="1000" height="1000"></canvas>
 									<div style="height: 30px;">
 											<button class="btn btn-warning" style="float: left;" onclick="lastStep();">&lt;&lt; Last Step</button>
