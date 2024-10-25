@@ -1,11 +1,9 @@
-// Initialize Cropper.js
 cropper = null;
 image_to_crop = document.getElementById('image_to_crop');
 
-// Function to initialize or reinitialize Cropper.js
 function initializeCropper() {
   if (cropper) {
-    cropper.destroy(); // Destroy the previous cropper instance if it exists
+    cropper.destroy();
   }
   cropper = new Cropper(image_to_crop, {
     aspectRatio: 1 / 1,
@@ -17,7 +15,6 @@ function initializeCropper() {
   });
 }
 
-// Handle file upload and change the image source
 document.getElementById('upload-image').addEventListener('change', function (event) {
   const file = event.target.files[0];
   if (file) {
@@ -30,36 +27,31 @@ document.getElementById('upload-image').addEventListener('change', function (eve
   }
 });
 
-// Custom button click to trigger the hidden file input
 document.getElementById('custom-file-button').addEventListener('click', function () {
   document.getElementById('upload-image').click();
 });
 
-// Rotate Left
 document.getElementById('rotate-left').addEventListener('click', () => {
-  cropper.rotate(-45); // Rotate image 45 degrees counterclockwise
+  cropper.rotate(-45);
 });
 
-// Rotate Right
 document.getElementById('rotate-right').addEventListener('click', () => {
-  cropper.rotate(45); // Rotate image 45 degrees clockwise
+  cropper.rotate(45);
 });
 
-// Zoom In
 document.getElementById('zoom-in').addEventListener('click', () => {
-  cropper.zoom(0.1); // Zoom in by 10%
+  cropper.zoom(0.1);
 });
 
-// Zoom Out
 document.getElementById('zoom-out').addEventListener('click', () => {
-  cropper.zoom(-0.1); // Zoom out by 10%
+  cropper.zoom(-0.1);
 });
 
-// Crop
 document.getElementById('crop').addEventListener('click', function () {
-  croppedImage = document.getElementById('cropped-image');
-  canvas = cropper.getCroppedCanvas();
-  croppedImage.src = canvas.toDataURL('image/png');
-  downloadButton = document.getElementById('download-button');
-  downloadButton.href = croppedImage.src;
+  const canvas = cropper.getCroppedCanvas();
+  const imageURL = canvas.toDataURL('image/png');
+  const tempLink = document.createElement('a');
+  tempLink.href = imageURL;
+  tempLink.download = 'cropped-image.png';
+  tempLink.click();
 });

@@ -55,7 +55,7 @@
 				<p>A free tool for creating incredible string art.</p>
 				<ul class="actions">
 					<li><a href="#header"
-							class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+							class="button icon solo scrolly"><i class="fa-solid fa-arrow-down fa-2x"></i></a></li>
 				</ul>
 			</div>
 
@@ -73,10 +73,11 @@
 							Generator</a></li>
 					<li><a id="base_generator" >Base
 							Generator</a></li>
+					<li><a id="walkthrough" >Walkthrough</a></li>
 				</ul>
 				<ul class="icons">
 					<li><a href="https://github.com/llacoste/threadscape"
-							class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+							class="icon"><i class="fa-brands fa-github-square fa-2x custom-line-height"></i></a></li>
 				</ul>
 			</nav>
 
@@ -113,39 +114,22 @@
 				<div id="image_cropper_page" class="page-content" style="display: none;">
 					<div class="container">
 						<div class="row">
-							<div class="col-8">
-								<h3>Original Image:</h3>
-									<section class="image_container">
-										<img id="image_to_crop" src="images/mandala_close.jpg" alt="Image to crop"/>
-									</section>
-					
-								</br>
-					
-									<section style="margin-bottom: 25px;">
-										<button id="custom-file-button" class="button primary fit">Click to select an Image</button>
+							<div class="col-12">
+								<section class="image_container">
+									<img id="image_to_crop" src="images/mandala_close.jpg" alt="Image to crop"/>
+								</section>
+								<hr>
+								<section style="margin-bottom: 25px;">
+									<center>
+										<button id="custom-file-button" class="button primary small"><i class="fa-solid fa-file marign_right"></i>Click to select an Image</button>
 										<input class="display_none" type="file" id="upload-image" accept="image/*" />
-									</section>
-					
-									<!-- Control buttons -->
-									<section style="margin-bottom: 25px;">
-										<center>
-											<button id="rotate-left" class="button small">Rotate Left</button>
-											<button id="rotate-right" class="button small">Rotate Right</button>
-											<button id="zoom-in" class="button small">Zoom In</button>
-											<button id="zoom-out" class="button small">Zoom Out</button>
-										</center>
-									</section>
-					
-									<section>
-										<button id="crop" class="button primary fit">Crop</button>
-									</section>
-							</div>
-							<div class="col-4">
-								<div id="cropped-result">
-									<h3>Cropped Image:</h3>
-									<img id="cropped-image" src="" alt="After you select Crop above, your cropped image will appear here." />
-								</div>
-								<a id="download-button" class="button primary fit" download="cropped-image.png">Download Cropped Image</a>
+										<button id="rotate-left" class="button small"><i class="fa-solid fa-rotate-left marign_right"></i>Rotate Left</button>
+										<button id="rotate-right" class="button small"><i class="fa-solid fa-rotate-right marign_right"></i>Rotate Right</button>
+										<button id="zoom-in" class="button small"><i class="fa-solid fa-magnifying-glass-plus marign_right"></i>Zoom In</button>
+										<button id="zoom-out" class="button small"><i class="fa-solid fa-magnifying-glass-minus marign_right"></i>Zoom Out</button>
+										<button id="crop" class="button primary small"><i class="fa-solid fa-crop marign_right"></i>Crop and Download</button>
+									</center>
+								</section>
 							</div>
 						</div>
 					</div>
@@ -256,9 +240,31 @@
 									<h3>Output</h3>
 									<ul class="actions fit">
 										<li><a  class="button fit">Download Processed Image</a></li>
-										<li><a  class="button fit">Download Instructions</a></li>
+										<!-- <li><a  class="button fit">Download Instructions</a></li> -->
 									</ul>
 								</section>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="walkthrough_page" class="page-content" style="display: none;">
+					<div class="container">
+						<div class="row">
+							<div class="col-12">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div id="incrementalDrawing">
+									<span id="incrementalCurrentStep">Current Line: 1 |  Pin 0 to 144</span>
+									<div id="drawStatus"></div>
+									<canvas class="centerCanvasLarge" id="canvasOutput3" width="1000" height="1000"></canvas>
+									<div style="height: 30px;">
+											<button class="btn btn-warning" style="float: left;" onclick="lastStep();">&lt;&lt; Last Step</button>
+											<button class="btn btn-success" style="float: right;" onclick="nextStep();">Next Step &gt;&gt;</button>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -372,6 +378,7 @@
 		<script src="assets/js/base_generator.js"></script>
 		<script src="assets/js/image_cropper.js"></script>
 		<script src="assets/js/instruction_generator.js"></script>
+		<script src="https://kit.fontawesome.com/81b3be42c1.js" crossorigin="anonymous"></script>
 		<script
 			src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 	</body>

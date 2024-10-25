@@ -81,7 +81,6 @@ img#image {
   box-sizing: border-box;
 }
 
-
 canvas {
   width: 100%;
   height: 100%;
@@ -93,4 +92,13 @@ canvas {
   justify-content: center; /* Horizontally centers the button */
   align-items: center;     /* Vertically centers the button */
   height: 100%;            /* Ensure the parent container has height to center vertically */
+}
+
+.marign_right {
+  margin-right: 5px;
+}
+
+.custom-line-height {
+  line-height: 0 !important;
+  vertical-align: middle;
 }
