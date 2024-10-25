@@ -1,26 +1,12 @@
 var IMG_SIZE = 500;
-
-// set up element variables
-var source_image_element = document.getElementById("source_image")
-var original_img_preview_canvas=document.getElementById("original_img_preview").getContext("2d");
-var string_art_canvas=document.getElementById("string_art_canvas").getContext("2d");
-var status_bar = document.getElementById("status");
-var draw_status = document.getElementById("draw_status");
-var string_art_output = document.getElementById("string_art_output");
-
 var R = {};
-
-//pre initilization
 var pin_coords;
 var center;
 var radius;
-
 var line_cache_y;
 var line_cache_x;
 var line_cache_length;
 var line_cache_weight;
-
-//line variables
 var error;
 var img_result;    
 var result;
@@ -30,15 +16,16 @@ var pin;
 var thread_length;
 var last_pins;
 
-//*******************************
-//      Line Generation
-//*******************************
-
-source_image_element.onload = function() {
+function start_generator(){
+  reset_all_variables();
   showStep(1);
-  string_art_output.classList.add('hidden');
-  incrementalDrawing.classList.add('hidden');
-  // Take uploaded picture, square up and put on canvas
+  square_crop_image()
+  convert_image_to_grayscale();
+  cirle_crop_canvas();
+  NonBlockingCalculatePins();
+}
+
+function square_crop_image(){
   base_image = new Image();
   base_image.src = source_image_element.src;
   original_img_preview_canvas.canvas.width = IMG_SIZE;
@@ -63,9 +50,9 @@ source_image_element.onload = function() {
   }
 
   original_img_preview_canvas.drawImage(base_image, xOffset, yOffset, selectedWidth, selectedHeight, 0, 0, IMG_SIZE, IMG_SIZE);
+}
 
-  // make grayscale by averaging the RGB channels.
-  // extract out the R channel because that's all we need and push graysacle image onto canvas
+function convert_image_to_grayscale(){
   var imgPixels = original_img_preview_canvas.getImageData(0, 0, IMG_SIZE, IMG_SIZE);
   R = img_result = nj.ones([IMG_SIZE, IMG_SIZE ]).multiply(0xff);
   var rdata = [];     
@@ -81,16 +68,14 @@ source_image_element.onload = function() {
   }
   R.selection.data = rdata;
   original_img_preview_canvas.putImageData(imgPixels, 0, 0, 0, 0, IMG_SIZE, IMG_SIZE);
+}
 
-  //circle crop canvas
+function cirle_crop_canvas(){
   original_img_preview_canvas.globalCompositeOperation='destination-in';
   original_img_preview_canvas.beginPath();
   original_img_preview_canvas.arc(IMG_SIZE/2,IMG_SIZE/2, IMG_SIZE/2, 0, Math.PI*2);
   original_img_preview_canvas.closePath();
   original_img_preview_canvas.fill();
-
-  // start processing
-  NonBlockingCalculatePins();    
 }
 
 function NonBlockingCalculatePins(){
@@ -232,7 +217,7 @@ function NonBlockingLineCalculator(){
           l++;
           setTimeout(codeBlock, 0);
       } else {
-          Finalize();
+          finalize();
       }
   })();
 }
@@ -245,18 +230,39 @@ function draw(){
   dst.delete();
 }
 
-function Finalize() {
+function finalize() {
   let dsize = new cv.Size(IMG_SIZE * 2, IMG_SIZE * 2);
   let dst = new cv.Mat();
   cv.resize(result, dst, dsize, 0, 0, cv.INTER_AREA);
-
   draw_status.textContent = num_segements() + " Lines drawn | 100% complete";
-
   cv.imshow('string_art_canvas', dst);
   status_bar.textContent = "Complete";
-  string_art_output.classList.remove('hidden');
+  showStep(4);
+  instruction_generator_has_run = true;
   dst.delete(); result.delete();
-  window.scrollTo({ top: 5000, left: 0, behavior: 'smooth' });
+  cleanup_variables();
+}
+
+function cleanup_variables(){
+  var R = {};
+  pin_coords = null;
+  center = null;
+  radius = null;
+  line_cache_y = null;
+  line_cache_x = null;
+  line_cache_length = null;
+  line_cache_weight = null;
+  img_result = null;
+  result = null;
+  line_mask = null;
+  pin = null;
+  last_pins = null;
+}
+
+function reset_all_variables(){
+  error = null;
+  line_sequence = null;
+  thread_length = null;
 }
 
 function getLineErr(arr, coords1, coords2){
