@@ -158,7 +158,7 @@
 											</center>
 										</div>
 										<div id="string_art_output" class="center hidden">
-											<h3>Output</h3>
+											<h4>Output</h4>
 											<ul class="actions fit">
 												<li><a id="download_processed_image" class="button fit">Download Processed Image</a></li>
 												<li><a id="download_instructions" class="button fit">Download Instructions</a></li>
@@ -209,10 +209,31 @@
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-2">
-											Pegs
+										<div class="col-6">
+											<p class="tooltip">
+												Diameter (Inches)
+												<span class="tooltip-text">The diameter of the base.</span>
+											</p>
 										</div>
-										<div class="col-7">
+									</div>
+									<div class="row">
+										<div class="col-9">
+											<input type="range" id="instruction_diameter_slider" min="12" max="48" value="24">
+										</div>
+										<div class="col-3">
+											<input type="text" id="instruction_diameter_slider_value" value="24">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-6">
+											<p class="tooltip">
+												Peg Count
+												<span class="tooltip-text">The number of pegs on the base.</span>
+											</p>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-9">
 											<input type="range" id="pegs_slider" min="150" max="1200" value="360">
 										</div>
 										<div class="col-3">
@@ -220,25 +241,67 @@
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-2">
-											Segments
-										</div>
-										<div class="col-7">
-											<input type="range" id="segments_slider" min="0" max="10000" value="2000">
-										</div>
-										<div class="col-3">
-											<input type="text" id="segments_slider_value" value="2000">
+										<div class="col-6">
+											<p class="tooltip">
+												Line Count
+												<span class="tooltip-text">The number of lines that makes up the image.</span>
+											</p>
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-2">
-											Weight
+										<div class="col-9">
+											<input type="range" id="segments_slider" min="0" max="10000" value="1500">
 										</div>
-										<div class="col-7">
+										<div class="col-3">
+											<input type="text" id="segments_slider_value" value="1500">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-6">
+											<p class="tooltip">
+												Line Weight
+												<span class="tooltip-text">Adjusting this affects of lines are selected while processing. You can think of this as contrast.</span>
+											</p>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-9">
 											<input type="range" id="weight_slider" min="1" max="100" value="50">
 										</div>
 										<div class="col-3">
 											<input type="text" id="weight_slider_value" value="50">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-6">
+											<p class="tooltip">
+												Minimum Peg Distance
+												<span class="tooltip-text">This adjusts the minimum distance two pegs must be from one another when selecting lines.</span>
+											</p>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-9">
+											<input type="range" id="minimum_peg_distance_slider" min="1" max="100" value="20">
+										</div>
+										<div class="col-3">
+											<input type="text" id="minimum_peg_distance_slider_value" value="20">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-6">
+											<p class="tooltip">
+												Scale
+												<span class="tooltip-text">This adjusts the quality of the rendered preview image. A higher value yields a better image; however, this will dramatically increase resource usage.</span>
+											</p>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-9">
+											<input type="range" id="scale_slider" min="1" max="100" value="20">
+										</div>
+										<div class="col-3">
+											<input type="text" id="scale_slider_value" value="20">
 										</div>
 									</div>
 									<div class="row not_yet_implemented">
@@ -318,7 +381,7 @@
 											</ul>
 										</div>
 									</div>
-									<div class="row">
+									<div class="row row not_yet_implemented">
 										<div class="col-4">
 											Units
 										</div>
@@ -330,10 +393,12 @@
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-2">
-											Diameter
+										<div class="col-6">
+											Diameter (Inches)
 										</div>
-										<div class="col-7">
+									</div>
+									<div class="row">
+										<div class="col-9">
 											<input type="range" id="diameter_slider" min="12" max="48" value="24">
 										</div>
 										<div class="col-3">
@@ -344,7 +409,9 @@
 										<div class="col-2">
 											Pegs
 										</div>
-										<div class="col-7">
+									</div>
+									<div class="row">
+										<div class="col-9">
 											<input type="range" id="pegs_slider" min="150" max="720" value="360">
 										</div>
 										<div class="col-3">

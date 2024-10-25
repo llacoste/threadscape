@@ -55,9 +55,12 @@ setupButtonGroupListeners('instruction_shape_selection');
 setupButtonGroupListeners('instruction_quality_selection');
 setupButtonGroupListeners('instruction_mode_selection');
 
+syncSliderAndInput('instruction_diameter_slider', 'instruction_diameter_slider_value', 12, 48);
 syncSliderAndInput('pegs_slider', 'pegs_slider_value', 150, 1200);
 syncSliderAndInput('segments_slider', 'segments_slider_value', 0, 10000);
 syncSliderAndInput('weight_slider', 'weight_slider_value', 1, 100);
+syncSliderAndInput('minimum_peg_distance_slider', 'minimum_peg_distance_slider_value', 1, 100);
+syncSliderAndInput('scale_slider', 'scale_slider_value', 1, 100);
 syncSliderAndInput('opacity_slider', 'opacity_slider_value', 1, 5);
 syncSliderAndInput('thickness_slider', 'thickness_slider_value', 25, 100);
 
@@ -66,5 +69,5 @@ document.getElementById('input-file-button').addEventListener('click', function 
 });
 
 document.getElementById('image_input').addEventListener('change', function (event) {
-  imgElement.src = URL.createObjectURL(event.target.files[0]);
+  source_image_element.src = URL.createObjectURL(event.target.files[0]);
 });

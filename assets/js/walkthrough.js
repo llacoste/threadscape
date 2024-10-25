@@ -10,6 +10,7 @@ var ctx3=document.getElementById("canvasOutput3").getContext("2d");
 
 var pointIndex = 0;
 var lastStepImage;
+var listenForKeys = false;
 
 function startCreating(){
   window.speechSynthesis.getVoices();

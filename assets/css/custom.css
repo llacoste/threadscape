@@ -154,3 +154,49 @@ width: 800px;
 .page-content {
   min-height: 750px;
 }
+
+.tooltip {
+  position: relative; /* Positioning context for the tooltip */
+  display: inline-block;
+  cursor: pointer; /* Show pointer cursor on hover */
+  color: #333; /* Text color */
+  margin: 0; /* Remove any extra margin */
+  padding: 0; /* Remove any extra padding */
+}
+
+/* Style for the tooltip text */
+.tooltip-text {
+  visibility: hidden;
+  width: 275px;
+  background-color: #555;
+  color: #fff;
+  text-align: left;
+  padding: 8px 20px 8px 20px;
+  border-radius: 6px;
+  position: absolute;
+  top: 50%;
+  left: 110%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  margin: 0;
+  z-index: 1000;
+}
+
+/* Add an arrow pointing to the left */
+.tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%; /* Position the arrow on the left */
+  transform: translateY(-50%);
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent #555 transparent transparent; /* Arrow color */
+}
+
+/* Show tooltip on hover */
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1; /* Make it visible */
+}

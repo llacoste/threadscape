@@ -1,13 +1,7 @@
 var IMG_SIZE = 500;
-var MIN_LOOP = 20;
-var MIN_DISTANCE = 20;
-var FILENAME = "";
-var SCALE = 20;
-var HOOP_DIAMETER = 0.625;
 
 // set up element variables
-var imgElement = document.getElementById("source_image")
-var inputElement = document.getElementById("image_input");
+var source_image_element = document.getElementById("source_image")
 var original_img_preview_canvas=document.getElementById("original_img_preview").getContext("2d");
 var string_art_canvas=document.getElementById("string_art_canvas").getContext("2d");
 var status_bar = document.getElementById("status");
@@ -36,20 +30,17 @@ var pin;
 var thread_length;
 var last_pins;
 
-var listenForKeys = false;
-
 //*******************************
 //      Line Generation
 //*******************************
 
-imgElement.onload = function() {
-  listenForKeys = false;
+source_image_element.onload = function() {
   showStep(1);
   string_art_output.classList.add('hidden');
   incrementalDrawing.classList.add('hidden');
   // Take uploaded picture, square up and put on canvas
   base_image = new Image();
-  base_image.src = imgElement.src;
+  base_image.src = source_image_element.src;
   original_img_preview_canvas.canvas.width = IMG_SIZE;
   original_img_preview_canvas.canvas.height = IMG_SIZE;
   string_art_canvas.canvas.weight = IMG_SIZE * 2;
@@ -134,7 +125,7 @@ function NonBlockingPrecalculateLines(){
 
   (function codeBlock(){
       if(a < num_pegs()){
-          for (b = a + MIN_DISTANCE; b < num_pegs(); b++) {
+          for (b = a + minimum_peg_distance(); b < num_pegs(); b++) {
               x0 = pin_coords[a][0];
               y0 = pin_coords[a][1];
           
@@ -166,8 +157,8 @@ function NonBlockingLineCalculator(){
   status_bar.textContent = "Drawing Lines...";
   error = nj.ones([IMG_SIZE, IMG_SIZE]).multiply(0xff).subtract(nj.uint8(R.selection.data).reshape(IMG_SIZE, IMG_SIZE));
   img_result = nj.ones([IMG_SIZE, IMG_SIZE ]).multiply(0xff);    
-  result = nj.ones([IMG_SIZE * SCALE, IMG_SIZE * SCALE]).multiply(0xff);
-  result = new cv.matFromArray(IMG_SIZE * SCALE, IMG_SIZE * SCALE, cv.CV_8UC1, result.selection.data);
+  result = nj.ones([IMG_SIZE * scale(), IMG_SIZE * scale()]).multiply(0xff);
+  result = new cv.matFromArray(IMG_SIZE * scale(), IMG_SIZE * scale(), cv.CV_8UC1, result.selection.data);
   line_mask = nj.zeros([IMG_SIZE, IMG_SIZE], 'float64');
   
   line_sequence = [];
@@ -186,7 +177,7 @@ function NonBlockingLineCalculator(){
           max_err = -1;
           best_pin = -1;
 
-          for(offset=MIN_DISTANCE; offset < num_pegs() - MIN_DISTANCE; offset++){
+          for(offset=minimum_peg_distance(); offset < num_pegs() - minimum_peg_distance(); offset++){
               test_pin = (pin + offset) % num_pegs();
               if(last_pins.includes(test_pin)){
                   continue;
@@ -216,8 +207,8 @@ function NonBlockingLineCalculator(){
 
 
           
-          p = new cv.Point(pin_coords[pin][0] * SCALE, pin_coords[pin][1] * SCALE);
-          p2 = new cv.Point(pin_coords[best_pin][0] * SCALE, pin_coords[best_pin][1] * SCALE);
+          p = new cv.Point(pin_coords[pin][0] * scale(), pin_coords[pin][1] * scale());
+          p2 = new cv.Point(pin_coords[best_pin][0] * scale(), pin_coords[best_pin][1] * scale());
           cv.line(result, p, p2, new cv.Scalar(0, 0, 0), 2, cv.LINE_AA, 0);
 
           x0 = pin_coords[pin][0];
@@ -227,7 +218,7 @@ function NonBlockingLineCalculator(){
           y1 = pin_coords[best_pin][1];
 
           dist = Math.sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
-          thread_length += HOOP_DIAMETER / length * dist;
+          thread_length += base_diameter() * (dist / diameter());
 
           last_pins.push(best_pin);
           if(last_pins.length > 20){
@@ -262,7 +253,6 @@ function Finalize() {
   draw_status.textContent = num_segements() + " Lines drawn | 100% complete";
 
   cv.imshow('string_art_canvas', dst);
-  console.log(line_sequence);
   status_bar.textContent = "Complete";
   string_art_output.classList.remove('hidden');
   dst.delete(); result.delete();
@@ -368,6 +358,21 @@ function num_pegs() {
 function line_weight() {
   line_weight_slider_value = document.getElementById('weight_slider_value');
   return parseInt(line_weight_slider_value.value, 10);
+}
+
+function minimum_peg_distance() {
+  minimum_peg_distance_slider_value = document.getElementById('minimum_peg_distance_slider_value');
+  return parseInt(minimum_peg_distance_slider_value.value, 10);
+}
+
+function scale() {
+  scale_slider_value = document.getElementById('scale_slider_value');
+  return parseInt(scale_slider_value.value, 10);
+}
+
+function base_diameter() {
+  instruction_diameter_slider_value = document.getElementById('instruction_diameter_slider_value');
+  return parseInt(instruction_diameter_slider_value.value, 10);
 }
 
 function diameter(){
