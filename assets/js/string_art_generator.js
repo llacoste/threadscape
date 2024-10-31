@@ -352,27 +352,27 @@ function linspace(a,b,n) {
 
 // Helper functions for interacting with UI:
 function num_segements() {
-  segments_slider_value = document.getElementById('segments_slider_value');
+  segments_slider_value = document.getElementById('instruction_segments_slider_value');
   return parseInt(segments_slider_value.value, 10);
 }
 
 function num_pegs() {
-  pegs_slider_value = document.getElementById('pegs_slider_value');
+  pegs_slider_value = document.getElementById('instruction_pegs_slider_value');
   return parseInt(pegs_slider_value.value, 10);
 }
 
 function line_weight() {
-  line_weight_slider_value = document.getElementById('weight_slider_value');
+  line_weight_slider_value = document.getElementById('instruction_weight_slider_value');
   return parseInt(line_weight_slider_value.value, 10);
 }
 
 function minimum_peg_distance() {
-  minimum_peg_distance_slider_value = document.getElementById('minimum_peg_distance_slider_value');
+  minimum_peg_distance_slider_value = document.getElementById('instruction_minimum_peg_distance_slider_value');
   return parseInt(minimum_peg_distance_slider_value.value, 10);
 }
 
 function scale() {
-  scale_slider_value = document.getElementById('scale_slider_value');
+  scale_slider_value = document.getElementById('instruction_scale_slider_value');
   return parseInt(scale_slider_value.value, 10);
 }
 
