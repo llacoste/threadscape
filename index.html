@@ -73,7 +73,7 @@
 							Generator</a></li>
 					<li><a id="base_generator" >Base
 							Generator</a></li>
-					<!-- <li><a id="walkthrough" >Walkthrough</a></li> -->
+					<li><a id="walkthrough" >Walkthrough</a></li>
 				</ul>
 				<ul class="icons">
 					<li><a href="https://github.com/llacoste/threadscape"
@@ -95,15 +95,15 @@
 						
 						<div class="box alt">
 							<div class="row gtr-50 gtr-uniform">
-								<div class="col-6"><span ><h3>Turn this:</h3></span></div>
-								<div class="col-6"><span ><h3>Into this:</h3></span></div>
+								<div class="col-6"><h3>Turn this:</h3></div>
+								<div class="col-6"><h3>Into this:</h3></div>
 					
-								<div class="col-6"><span class="image fit"><img src="images/mandala_close.jpg" alt="" /></span></div>
-								<div class="col-6"><span class="image fit"><img src="images/mandala_strings.jpg" alt="" /></span></div>
+								<div class="col-6"><span class="image fit"><img src="images/before.png" alt="" /></span></div>
+								<div class="col-6"><span class="image fit"><img src="images/after.png" alt="" /></span></div>
 							</div>
 						</div>
 					
-						</br></br>
+						<br /><br />
 					
 						<ul class="actions special">
 							<li><a id="get_started" class="button large">Let's get started</a></li>
@@ -234,10 +234,10 @@
 									</div>
 									<div class="row">
 										<div class="col-9">
-											<input type="range" id="pegs_slider" min="150" max="1200" value="360">
+											<input type="range" id="instruction_pegs_slider" min="150" max="1200" value="360">
 										</div>
 										<div class="col-3">
-											<input type="text" id="pegs_slider_value" value="360">
+											<input type="text" id="instruction_pegs_slider_value" value="360">
 										</div>
 									</div>
 									<div class="row">
@@ -250,10 +250,10 @@
 									</div>
 									<div class="row">
 										<div class="col-9">
-											<input type="range" id="segments_slider" min="0" max="10000" value="1500">
+											<input type="range" id="instruction_segments_slider" min="0" max="10000" value="1500">
 										</div>
 										<div class="col-3">
-											<input type="text" id="segments_slider_value" value="1500">
+											<input type="text" id="instruction_segments_slider_value" value="1500">
 										</div>
 									</div>
 									<div class="row">
@@ -266,10 +266,10 @@
 									</div>
 									<div class="row">
 										<div class="col-9">
-											<input type="range" id="weight_slider" min="1" max="100" value="50">
+											<input type="range" id="instruction_weight_slider" min="1" max="100" value="50">
 										</div>
 										<div class="col-3">
-											<input type="text" id="weight_slider_value" value="50">
+											<input type="text" id="instruction_weight_slider_value" value="50">
 										</div>
 									</div>
 									<div class="row">
@@ -282,10 +282,10 @@
 									</div>
 									<div class="row">
 										<div class="col-9">
-											<input type="range" id="minimum_peg_distance_slider" min="1" max="100" value="20">
+											<input type="range" id="instruction_minimum_peg_distance_slider" min="1" max="100" value="20">
 										</div>
 										<div class="col-3">
-											<input type="text" id="minimum_peg_distance_slider_value" value="20">
+											<input type="text" id="instruction_minimum_peg_distance_slider_value" value="20">
 										</div>
 									</div>
 									<div class="row">
@@ -298,10 +298,10 @@
 									</div>
 									<div class="row">
 										<div class="col-9">
-											<input type="range" id="scale_slider" min="1" max="100" value="20">
+											<input type="range" id="instruction_scale_slider" min="1" max="100" value="20">
 										</div>
 										<div class="col-3">
-											<input type="text" id="scale_slider_value" value="20">
+											<input type="text" id="instruction_scale_slider_value" value="20">
 										</div>
 									</div>
 									<div class="row not_yet_implemented">
@@ -309,10 +309,10 @@
 											Opacity
 										</div>
 										<div class="col-7">
-											<input type="range" id="opacity_slider" min="1" max="5" value="2">
+											<input type="range" id="instruction_opacity_slider" min="1" max="5" value="2">
 										</div>
 										<div class="col-3">
-											<input type="text" id="opacity_slider_value" value="2">
+											<input type="text" id="instruction_opacity_slider_value" value="2">
 										</div>
 									</div>
 									<div class="row not_yet_implemented">
@@ -320,35 +320,13 @@
 											Thickness
 										</div>
 										<div class="col-7">
-											<input type="range" id="thickness_slider" min="25" max="100" value="50">
+											<input type="range" id="instruction_thickness_slider" min="25" max="100" value="50">
 										</div>
 										<div class="col-3">
-											<input type="text" id="thickness_slider_value" value="50">
+											<input type="text" id="instruction_thickness_slider_value" value="50">
 										</div>
 									</div>
 								</section>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div id="walkthrough_page" class="page-content" style="display: none;">
-					<div class="container">
-						<div class="row">
-							<div class="col-12">
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-12">
-								<div id="incrementalDrawing">
-									<span id="incrementalCurrentStep">Current Line: 1 |  Pin 0 to 144</span>
-									<div id="draw_status"></div>
-									<canvas class="centerCanvasLarge" id="canvasOutput3" width="1000" height="1000"></canvas>
-									<div style="height: 30px;">
-											<button class="btn btn-warning" style="float: left;" onclick="lastStep();">&lt;&lt; Last Step</button>
-											<button class="btn btn-success" style="float: right;" onclick="nextStep();">Next Step &gt;&gt;</button>
-									</div>
-								</div>
 							</div>
 						</div>
 					</div>
@@ -399,10 +377,10 @@
 									</div>
 									<div class="row">
 										<div class="col-9">
-											<input type="range" id="diameter_slider" min="12" max="48" value="24">
+											<input type="range" id="base_diameter_slider" min="12" max="48" value="24">
 										</div>
 										<div class="col-3">
-											<input type="text" id="diameter_slider_value" value="24">
+											<input type="text" id="base_diameter_slider_value" value="24">
 										</div>
 									</div>
 									<div class="row">
@@ -412,10 +390,10 @@
 									</div>
 									<div class="row">
 										<div class="col-9">
-											<input type="range" id="pegs_slider" min="150" max="720" value="360">
+											<input type="range" id="base_pegs_slider" min="150" max="720" value="360">
 										</div>
 										<div class="col-3">
-											<input type="text" id="pegs_slider_value" value="360">
+											<input type="text" id="base_pegs_slider_value" value="360">
 										</div>
 									</div>
 								</section>
@@ -426,6 +404,29 @@
 										<li><button onclick="generatePDF()" class="button primary fit">Download Base PDF</button></li>
 									</ul>
 								</section>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="walkthrough_page" class="page-content" style="display: none;">
+					<div class="container">
+						<div class="row">
+							<div class="col-12">
+								<button id="upload-instructions-button" class="button">Click to upload instructions.</button>
+								<input type="file" id="upload-instructions-input" accept=".txt" style="display: none;" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div id="incrementalDrawing">
+									<span id="incrementalCurrentStep"></span>
+									<canvas class="centerCanvasMedium" id="canvasOutput3"></canvas>
+									<div style="height: 30px;">
+											<button class="btn btn-warning" style="float: left;" onclick="lastStep();">&lt;&lt; Last Step</button>
+											<button class="btn btn-success" style="float: right;" onclick="nextStep();">Next Step &gt;&gt;</button>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -468,6 +469,7 @@
 		<script src="assets/js/image_cropper.js"></script>
 		<script src="assets/js/string_art_generator.js"></script>
 		<script src="assets/js/instruction_generator.js"></script>
+		<script src="assets/js/walkthrough.js"></script>
 		<script src="https://kit.fontawesome.com/81b3be42c1.js" crossorigin="anonymous"></script>
 		<script
 			src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>

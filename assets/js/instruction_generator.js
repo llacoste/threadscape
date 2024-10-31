@@ -99,26 +99,26 @@ setupButtonGroupListeners('instruction_mode_selection');
 syncSliderAndInput('instruction_diameter_slider', 'instruction_diameter_slider_value', 12, 48);
 addUpdateListener('instruction_diameter_slider', 'instruction_diameter_slider_value');
 
-syncSliderAndInput('pegs_slider', 'pegs_slider_value', 150, 1200);
-addUpdateListener('pegs_slider', 'pegs_slider_value');
+syncSliderAndInput('instruction_pegs_slider', 'instruction_pegs_slider_value', 150, 1200);
+addUpdateListener('instruction_pegs_slider', 'instruction_pegs_slider_value');
 
-syncSliderAndInput('segments_slider', 'segments_slider_value', 0, 10000);
-addUpdateListener('segments_slider', 'segments_slider_value');
+syncSliderAndInput('instruction_segments_slider', 'instruction_segments_slider_value', 0, 10000);
+addUpdateListener('instruction_segments_slider', 'instruction_segments_slider_value');
 
-syncSliderAndInput('weight_slider', 'weight_slider_value', 1, 100);
-addUpdateListener('weight_slider', 'weight_slider_value');
+syncSliderAndInput('instruction_weight_slider', 'instruction_weight_slider_value', 1, 100);
+addUpdateListener('instruction_weight_slider', 'instruction_weight_slider_value');
 
-syncSliderAndInput('minimum_peg_distance_slider', 'minimum_peg_distance_slider_value', 1, 100);
-addUpdateListener('minimum_peg_distance_slider', 'minimum_peg_distance_slider_value');
+syncSliderAndInput('instruction_minimum_peg_distance_slider', 'instruction_minimum_peg_distance_slider_value', 1, 100);
+addUpdateListener('instruction_minimum_peg_distance_slider', 'instruction_minimum_peg_distance_slider_value');
 
-syncSliderAndInput('scale_slider', 'scale_slider_value', 1, 100);
-addUpdateListener('scale_slider', 'scale_slider_value');
+syncSliderAndInput('instruction_scale_slider', 'instruction_scale_slider_value', 1, 100);
+addUpdateListener('instruction_scale_slider', 'instruction_scale_slider_value');
 
-syncSliderAndInput('opacity_slider', 'opacity_slider_value', 1, 5);
-addUpdateListener('opacity_slider', 'opacity_slider_value');
+syncSliderAndInput('instruction_opacity_slider', 'instruction_opacity_slider_value', 1, 5);
+addUpdateListener('instruction_opacity_slider', 'instruction_opacity_slider_value');
 
-syncSliderAndInput('thickness_slider', 'thickness_slider_value', 25, 100);
-addUpdateListener('thickness_slider', 'thickness_slider_value');
+syncSliderAndInput('instruction_thickness_slider', 'instruction_thickness_slider_value', 25, 100);
+addUpdateListener('instruction_thickness_slider', 'instruction_thickness_slider_value');
 
 document.getElementById('input-file-button').addEventListener('click', function () {
   document.getElementById('image_input').click();

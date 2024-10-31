@@ -3,8 +3,8 @@ function drawDots() {
   const ctx = canvas.getContext('2d');
   const shape = document.querySelector('#base_shape_selection .primary').textContent.trim();
   const unit = document.querySelector('#base_unit_selection .primary').textContent.trim();
-  const numDots = parseInt(document.getElementById('pegs_slider_value').value);
-  let diameter = parseFloat(document.getElementById('diameter_slider_value').value);
+  const numDots = parseInt(document.getElementById('base_pegs_slider_value').value);
+  let diameter = parseFloat(document.getElementById('base_diameter_slider_value').value);
 
   // Convert the diameter to centimeters if necessary
   diameter = convertToUnits(diameter, unit, 'Centimeters');
@@ -162,7 +162,7 @@ function generatePDF() {
   }
 
   // Retrieve the diameter value from the slider
-  const diameterValue = parseFloat(document.getElementById('diameter_slider_value').value);
+  const diameterValue = parseFloat(document.getElementById('base_diameter_slider_value').value);
 
   // Retrieve the selected unit (Inches or Centimeters)
   const selectedUnitElement = document.querySelector('#base_unit_selection .primary');
@@ -236,8 +236,8 @@ function generatePDF() {
 // Attach event listeners to update canvas when parameters change
 function initBaseCanvas() {
   // Call drawDots when any parameter is updated
-  document.getElementById('pegs_slider').addEventListener('input', drawDots);
-  document.getElementById('diameter_slider').addEventListener('input', drawDots);
+  document.getElementById('base_pegs_slider').addEventListener('input', drawDots);
+  document.getElementById('base_diameter_slider').addEventListener('input', drawDots);
   document.querySelectorAll('#base_shape_selection a').forEach(btn => {
     btn.addEventListener('click', drawDots);
   });
@@ -249,8 +249,8 @@ function initBaseCanvas() {
   drawDots();
 }
 
-syncSliderAndInput('diameter_slider', 'diameter_slider_value', 12, 48);
-syncSliderAndInput('pegs_slider', 'pegs_slider_value', 150, 720);
+syncSliderAndInput('base_diameter_slider', 'base_diameter_slider_value', 12, 48);
+syncSliderAndInput('base_pegs_slider', 'base_pegs_slider_value', 150, 720);
 
 setupButtonGroupListeners('base_shape_selection');
 setupButtonGroupListeners('base_unit_selection');
